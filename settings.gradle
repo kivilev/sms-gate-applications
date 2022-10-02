@@ -1,1 +1,4 @@
 rootProject.name = 'SmsGateApplications'
+include 'applications:sms-gateway'
+include 'applications:common-sms'
+include 'transfer-models'

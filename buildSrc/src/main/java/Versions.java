@@ -15,5 +15,5 @@ public interface Versions {
     String grpc = "1.44.1";
     String logBackClassic = "1.2.11";
 
-    String kafkaClients = "3.0.0";
+    String springKafka = "2.9.1";
 }
