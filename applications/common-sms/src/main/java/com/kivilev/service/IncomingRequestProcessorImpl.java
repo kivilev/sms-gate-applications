@@ -23,11 +23,18 @@ public class IncomingRequestProcessorImpl {
 
     @Scheduled(initialDelay = MillisConstants.SECOND * 10, fixedRate = MillisConstants.MILLIS * 10)
     void processIncomingSmsRequest() {
+        var sourceId = "telegram";
+        var idempotencyKey = UUID.randomUUID().toString();
+
+        if (smsDao.isSmsExists(sourceId, idempotencyKey)) {
+            return;
+        }
+
         smsDao.saveSms(
                 new Sms(String.valueOf(counter.incrementAndGet()),
-                        "telegram",
-                        UUID.randomUUID().toString(),
-                        "smstext",
+                        sourceId,
+                        idempotencyKey,
+                        "sms text",
                         "+7-913-937-5656",
                         new SmsStatusInfo(SmsState.NEW_SMS, null, null))
         );

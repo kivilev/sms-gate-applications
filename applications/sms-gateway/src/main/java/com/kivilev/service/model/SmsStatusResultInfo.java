@@ -1,6 +1,10 @@
 package com.kivilev.service.model;
 
+import org.springframework.data.relational.core.mapping.Table;
+
+@Table("sms_status_result")
 public class SmsStatusResultInfo {
+
     private SmsState smsState;
     private SmsResult smsResult;
     private String errorCode;

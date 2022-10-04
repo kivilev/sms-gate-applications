@@ -1,4 +1,4 @@
-package com.kivilev.service.provider;
+package com.kivilev.provider;
 
 import com.kivilev.service.model.Sms;
 import com.kivilev.service.model.SmsStatusResultInfo;

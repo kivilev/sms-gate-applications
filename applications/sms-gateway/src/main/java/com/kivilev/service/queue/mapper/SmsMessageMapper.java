@@ -28,7 +28,8 @@ public class SmsMessageMapper {
                 smsSendMessageDto.smsText(),
                 smsSendMessageDto.receiverPhoneNumber(),
                 smsStatusInfo,
-                false);
+                false,
+                true);
     }
 
     private SmsStatusDto toSmsStatusDto(SmsResult smsResult) {

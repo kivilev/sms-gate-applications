@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public interface SmsDao {
-    boolean isExists(String source, String sourceIdempotencyKey);
+    boolean isSmsExists(String source, String sourceIdempotencyKey);
 
     List<Sms> getSmsList(Predicate<Sms> filterPredicate, int packageSize);
 

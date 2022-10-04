@@ -1,18 +1,23 @@
 package com.kivilev.dao;
 
 import com.kivilev.service.model.Sms;
+import com.kivilev.service.model.SmsResult;
+import com.kivilev.service.model.SmsState;
 import com.kivilev.service.model.SmsStatusResultInfo;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 public interface SmsDao {
 
-    boolean isExists(String smsId);
-
     void saveSms(Sms sms);
+
+    void saveSmsMessages(List<Sms> smsList);
 
     void saveSmsStatusResultInfo(String smsId, SmsStatusResultInfo smsStatusResultInfo);
 
-    List<Sms> getSmsList(Predicate<Sms> filterPredicate, int packageSize);
+    List<Sms> getSmsMessages(SmsState smsState, SmsResult smsResult, int packageSize);
+
+    List<Sms> findBySmsIds(List<String> smsIds);
+
+    List<Sms> getSmsMessagesReadyForSendingQueue(int packageSize);
 }

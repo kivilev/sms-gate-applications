@@ -4,6 +4,7 @@ import com.kivilev.config.SmsStateProcessingConfig;
 import com.kivilev.dao.SmsDao;
 import com.kivilev.service.model.Sms;
 import com.kivilev.service.model.SmsState;
+import com.kivilev.service.processor.InitialSmsStateProcessor;
 import com.kivilev.service.processor.SmsStateProcessor;
 import com.kivilev.service.queue.ProducerQueueService;
 import com.kivilev.service.utils.MillisConstants;
@@ -23,43 +24,37 @@ public class SmsServiceImpl implements SmsService {
     private final SmsDao smsDao;
     private final Logger logger = LoggerFactory.getLogger(SmsServiceImpl.class);
     private final Map<SmsState, SmsStateProcessor> smsStateProcessors;
+    private final InitialSmsStateProcessor initialSmsStateProcessor;
 
     public SmsServiceImpl(SmsDao smsDao,
                           ProducerQueueService producerQueueService,
-                          Map<SmsState, SmsStateProcessor> smsStateProcessors) {
+                          Map<SmsState, SmsStateProcessor> smsStateProcessors,
+                          InitialSmsStateProcessor initialSmsStateProcessor) {
         this.smsDao = smsDao;
         this.smsStateProcessors = smsStateProcessors;
+        this.initialSmsStateProcessor = initialSmsStateProcessor;
     }
 
     @Override
     public void processNewSmsMessages(List<Sms> smsList) {
-        var smsFilteredList = smsList.stream()
-                .filter(sms -> !smsDao.isExists(sms.getSmsId()))
-                .toList();
-        smsFilteredList.forEach(sms -> {
-            logger.info(String.format("new message for send. smdId: %s", sms.getSmsId()));
-        });
-        smsFilteredList.forEach(smsDao::saveSms);
+        initialSmsStateProcessor.process(smsList);
     }
 
-    @Scheduled(initialDelay = MillisConstants.SECOND * 10, fixedRate = MillisConstants.MILLIS * 100)
+    @Scheduled(initialDelay = MillisConstants.SECOND * 10, fixedRate = MillisConstants.MILLIS * 10)
     @Override
     public void processSmsReadySendToProvider() {
-        logger.debug("processing sms which are ready for sending to sms provider...");
         smsStateProcessors.get(SmsState.NEW_FROM_QUEUE).process();
     }
 
-    @Scheduled(initialDelay = MillisConstants.SECOND * 10, fixedRate = MillisConstants.MILLIS * 100)
+    @Scheduled(initialDelay = MillisConstants.SECOND * 10, fixedRate = MillisConstants.MILLIS * 10)
     @Override
     public void getSmsStatusesFromProvider() {
-        logger.debug("getting sms statuses from sms provider...");
         smsStateProcessors.get(SmsState.SENT_TO_PROVIDER).process();
     }
 
-    @Scheduled(initialDelay = MillisConstants.SECOND * 10, fixedRate = MillisConstants.MILLIS * 100)
+    @Scheduled(initialDelay = MillisConstants.SECOND * 10, fixedRate = MillisConstants.MILLIS * 10)
     @Override
     public void sendSmsStatusesToQueue() {
-        logger.debug("sending sms final statuses to queue...");
         smsStateProcessors.get(SmsState.SENT_TO_CLIENT).process();
     }
 }

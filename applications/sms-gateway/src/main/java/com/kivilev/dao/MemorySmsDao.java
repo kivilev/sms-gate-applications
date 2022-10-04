@@ -13,9 +13,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Repository
-@Primary
-public class MemorySmsDao implements SmsDao {
-    ConcurrentMap<String, Sms> smsMap = new ConcurrentHashMap<>();
+public class MemorySmsDao {//implements SmsDao {
+/*    ConcurrentMap<String, Sms> smsMap = new ConcurrentHashMap<>();
 
     @Override
     public boolean isExists(String smsId) {
@@ -41,5 +40,5 @@ public class MemorySmsDao implements SmsDao {
                 .filter(filterPredicate)
                 .limit(packageSize)
                 .collect(Collectors.toList());
-    }
+    }*/
 }

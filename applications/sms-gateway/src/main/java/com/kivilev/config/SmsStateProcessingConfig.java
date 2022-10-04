@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @ConfigurationProperties(prefix = "state-processor")
 @Configuration
 public class SmsStateProcessingConfig {
-    private Integer packageSize = 15;
+    private Integer packageSize = 15; // TODO: считывать из конфига
 
     /*public SmsStateProcessorConfig(Integer packageSize) {
         this.packageSize = packageSize != null ? packageSize : 10;
@@ -22,7 +22,7 @@ public class SmsStateProcessingConfig {
 
     @Bean
     Map<SmsState, SmsStateProcessor> getSmsStateProcessorMap(List<SmsStateProcessor> smsStateProcessors) {
-        return smsStateProcessors.stream().collect(Collectors.toUnmodifiableMap(SmsStateProcessor::getSmsStatus, Function.identity()));
+        return smsStateProcessors.stream().collect(Collectors.toUnmodifiableMap(SmsStateProcessor::getSmsState, Function.identity()));
     }
 
     public Integer getPackageSize() {

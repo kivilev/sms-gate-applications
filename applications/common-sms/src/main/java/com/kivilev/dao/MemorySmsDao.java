@@ -18,7 +18,7 @@ public class MemorySmsDao implements SmsDao {
     ConcurrentMap<String, Sms> smsMap = new ConcurrentHashMap<>();
 
     @Override
-    public boolean isExists(String source, String sourceIdempotencyKey) {
+    public boolean isSmsExists(String source, String sourceIdempotencyKey) {
         return smsMap.get(getUniqueKey(source, sourceIdempotencyKey)) != null;
     }
 
@@ -38,7 +38,8 @@ public class MemorySmsDao implements SmsDao {
 
     @Override
     public void setSmsStatus(String smsId, SmsStatusInfo smsStatusInfo) {
-
+        var smsOptional = smsMap.values().stream().filter(sms -> sms.getSmsId().equals(smsId)).findFirst();
+        smsOptional.ifPresent(sms -> sms.setSmsStatusInfo(smsStatusInfo));
     }
 
     private String getUniqueKey(String sourceId, String sourceIdempotencyKey) {

@@ -11,13 +11,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class ApplicationConfig {
 
+    // TODO: читать из конфига
     private final Integer packageSize = 10;
 
     @Bean
     ObjectMapper createObjectMapper() {
         return new ObjectMapper();
     }
-
-
-
 }

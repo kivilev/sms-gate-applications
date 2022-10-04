@@ -27,7 +27,7 @@ public class KafkaConsumerQueueService implements ConsumerQueueService {
     }
 
     // TODO: брать из конфига
-    @KafkaListener(id = "sms-send", topics = {"sms-status-topic"}, containerFactory = "batchFactory")
+    @KafkaListener(id = "sms-status", topics = {"sms-status-topic"}, containerFactory = "batchFactory")
     @Override
     public void readSmsStatusMessages(List<SmsStatusChangeMessageDto> smsStatusChangeMessageDtos) {
         var smsStatusChangeMessages = smsStatusChangeMessageDtos.stream().map(smsMessageMapper::toSmsStatusChange).toList();
