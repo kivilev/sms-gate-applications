@@ -40,7 +40,7 @@ public class DequeSmsMessagesSmsStateProcessor implements InitialSmsStateProcess
 
             smsDao.saveSmsMessages(newSmsList);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error(e.toString());
         }
     }
 }

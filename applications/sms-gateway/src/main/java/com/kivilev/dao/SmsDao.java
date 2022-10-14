@@ -3,7 +3,7 @@ package com.kivilev.dao;
 import com.kivilev.service.model.Sms;
 import com.kivilev.service.model.SmsResult;
 import com.kivilev.service.model.SmsState;
-import com.kivilev.service.model.SmsStatusResultInfo;
+import com.kivilev.service.model.SmsStateDetail;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface SmsDao {
 
     void saveSmsMessages(List<Sms> smsList);
 
-    void saveSmsStatusResultInfo(String smsId, SmsStatusResultInfo smsStatusResultInfo);
+    void saveSmsStatusResultInfo(String smsId, SmsStateDetail smsStateDetail);
 
     List<Sms> getSmsMessages(SmsState smsState, SmsResult smsResult, int packageSize);
 

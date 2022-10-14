@@ -6,10 +6,7 @@ import com.kivilev.service.model.Sms;
 import com.kivilev.service.model.SmsState;
 import com.kivilev.service.processor.InitialSmsStateProcessor;
 import com.kivilev.service.processor.SmsStateProcessor;
-import com.kivilev.service.queue.ProducerQueueService;
 import com.kivilev.service.utils.MillisConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -22,14 +19,12 @@ import java.util.Map;
 public class SmsServiceImpl implements SmsService {
 
     private final SmsDao smsDao;
-    private final Logger logger = LoggerFactory.getLogger(SmsServiceImpl.class);
     private final Map<SmsState, SmsStateProcessor> smsStateProcessors;
     private final InitialSmsStateProcessor initialSmsStateProcessor;
 
     public SmsServiceImpl(SmsDao smsDao,
-                          ProducerQueueService producerQueueService,
-                          Map<SmsState, SmsStateProcessor> smsStateProcessors,
-                          InitialSmsStateProcessor initialSmsStateProcessor) {
+                          InitialSmsStateProcessor initialSmsStateProcessor,
+                          Map<SmsState, SmsStateProcessor> smsStateProcessors) {
         this.smsDao = smsDao;
         this.smsStateProcessors = smsStateProcessors;
         this.initialSmsStateProcessor = initialSmsStateProcessor;

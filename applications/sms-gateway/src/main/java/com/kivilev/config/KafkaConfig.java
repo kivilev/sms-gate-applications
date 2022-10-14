@@ -15,7 +15,7 @@ public class KafkaConfig {
         producerId = "sms-status-producer";
         consumerGroupId = "sms-gateway-sms-send-consumer-group";
         topicsSmsSendTopicNotificationQueueActualName = "sms-send-topic";
-        topicsSmsStatusTopicNotificationQueueActualName = "sms-status-topic";
+        topicsSmsStatusTopicNotificationQueueActualName = "sms-result-topic";
     }
 
     public String getBootstrapServers() {

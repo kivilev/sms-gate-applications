@@ -42,7 +42,7 @@ public class SendSmsToProviderSmsStateProcessor implements SmsStateProcessor {
                 smsDao.saveSmsStatusResultInfo(sms.getSmsId(), smsStatusInfo);
             });
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error(e.toString());
         }
     }
 

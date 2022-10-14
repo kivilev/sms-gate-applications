@@ -1,6 +1,6 @@
 package com.kivilev.config;
 
-import com.kivilev.service.queue.model.SmsStatusChangeMessageDto;
+import com.kivilev.service.queue.model.SmsResultMessageDto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -30,7 +30,7 @@ public class KafkaConsumerConfig {
 
     @Bean
     public KafkaListenerContainerFactory<?> batchFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, SmsStatusChangeMessageDto> factory =
+        ConcurrentKafkaListenerContainerFactory<String, SmsResultMessageDto> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setBatchListener(true);
@@ -40,7 +40,7 @@ public class KafkaConsumerConfig {
 
     @Bean
     public KafkaListenerContainerFactory<?> singleFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, SmsStatusChangeMessageDto> factory =
+        ConcurrentKafkaListenerContainerFactory<String, SmsResultMessageDto> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setBatchListener(false);
@@ -49,7 +49,7 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, SmsStatusChangeMessageDto> consumerFactory() {
+    public ConsumerFactory<String, SmsResultMessageDto> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs());
     }
 

@@ -15,7 +15,7 @@ public class Sms implements Persistable<String> {
     @Id
     @Nonnull
     private String smsId;
-    private String externalId;
+    private String externalId;//TODO: provider_external_id
     @Nonnull
     private String sourceId;
     @Nonnull
@@ -23,7 +23,7 @@ public class Sms implements Persistable<String> {
     @Nonnull
     private String receiverPhoneNumber;
 
-    private SmsStatusResultInfo smsStatusResultInfo;
+    private SmsStateDetail smsStateDetail;
 
     @Nonnull
     private boolean isSendStatusToQueue;
@@ -36,7 +36,7 @@ public class Sms implements Persistable<String> {
                @Nonnull String sourceId,
                @Nonnull String smsText,
                @Nonnull String receiverPhoneNumber,
-               SmsStatusResultInfo smsStatusResultInfo,
+               SmsStateDetail smsStateDetail,
                boolean isSendStatusToQueue,
                boolean isNew) {
         this.smsId = smsId;
@@ -44,7 +44,7 @@ public class Sms implements Persistable<String> {
         this.sourceId = sourceId;
         this.smsText = smsText;
         this.receiverPhoneNumber = receiverPhoneNumber;
-        this.smsStatusResultInfo = smsStatusResultInfo;
+        this.smsStateDetail = smsStateDetail;
         this.isSendStatusToQueue = isSendStatusToQueue;
         this.isNew = isNew;
     }
@@ -55,17 +55,17 @@ public class Sms implements Persistable<String> {
                 @Nonnull String sourceId,
                 @Nonnull String smsText,
                 @Nonnull String receiverPhoneNumber,
-                SmsStatusResultInfo smsStatusResultInfo,
+                SmsStateDetail smsStateDetail,
                 boolean isSendStatusToQueue) {
-        this(smsId, externalId, sourceId, smsText, receiverPhoneNumber, smsStatusResultInfo, isSendStatusToQueue, false);
+        this(smsId, externalId, sourceId, smsText, receiverPhoneNumber, smsStateDetail, isSendStatusToQueue, false);
     }
 
-    public SmsStatusResultInfo getSmsStatusInfo() {
-        return smsStatusResultInfo;
+    public SmsStateDetail getSmsStatusDetail() {
+        return smsStateDetail;
     }
 
-    public void setSmsStatusInfo(SmsStatusResultInfo smsStatusResultInfo) {
-        this.smsStatusResultInfo = smsStatusResultInfo;
+    public void setSmsStatusDetail(SmsStateDetail smsStateDetail) {
+        this.smsStateDetail = smsStateDetail;
     }
 
     public String getSmsId() {

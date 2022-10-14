@@ -1,8 +1,8 @@
 package com.kivilev.dao.repository;
 
-import com.kivilev.service.model.Sms;
-import com.kivilev.service.model.SmsResult;
-import com.kivilev.service.model.SmsState;
+import com.kivilev.model.Sms;
+import com.kivilev.model.SmsResult;
+import com.kivilev.model.SmsState;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +16,8 @@ public interface SmsRepository extends CrudRepository<Sms, String> {
 
     @Transactional(timeout = 10)
     Optional<Sms> findBySmsId(@Nonnull String smsId);
+
+    Optional<Sms> findBySourceIdAndSourceIdempotencyKey(String sourceId, String sourceIdempotencyKey);
 
     @Transactional(timeout = 10)
     @Query("""
@@ -36,13 +38,13 @@ public interface SmsRepository extends CrudRepository<Sms, String> {
     @Transactional(timeout = 10)
     @Query("""
             select s.*,
-                   sr.sms             AS "smsstatedetail_sms",
-                   sr."sms_state"     AS "smsstatedetail_sms_state",
-                   sr."error_code"    AS "smsstatedetail_error_code",
-                   sr."sms_result"    AS "smsstatedetail_sms_result",
-                   sr."error_message" AS "smsstatedetail_error_message"
-             from sms s
-             left join sms_state_detail sr ON sr.sms = s."sms_id"
+                   sr.sms             AS "smsstatusresultinfo_sms",
+                   sr."sms_state"     AS "smsstatusresultinfo_sms_state",
+                   sr."error_code"    AS "smsstatusresultinfo_error_code",
+                   sr."sms_result"    AS "smsstatusresultinfo_sms_result",
+                   sr."error_message" AS "smsstatusresultinfo_error_message"
+             from sms s 
+             left join sms_state_detail sr ON sr.sms = s."sms_id" 
             where s.is_send_status_to_queue = false 
               and (sr.sms_result = 'ERROR' or 
                    (sr.sms_state = 'SENT_TO_CLIENT' and sr.sms_result = 'SUCCESSFUL_PROCESSED')) 

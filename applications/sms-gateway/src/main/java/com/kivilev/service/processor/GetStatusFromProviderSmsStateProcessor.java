@@ -22,8 +22,8 @@ public class GetStatusFromProviderSmsStateProcessor implements SmsStateProcessor
     private final SmsDao smsDao;
     private final SmsStateProcessingConfig smsStateProcessingConfig;
     private final SmsProviderService smsProviderService;
-    private final Predicate<Sms> predicate = (Sms sms) -> sms.getSmsStatusInfo().getSmsStatus() == processingSmsState &&
-            sms.getSmsStatusInfo().getSmsResult() == SmsResult.SUCCESSFUL_PROCESSED;
+    private final Predicate<Sms> predicate = (Sms sms) -> sms.getSmsStatusDetail().getSmsStatus() == processingSmsState &&
+            sms.getSmsStatusDetail().getSmsResult() == SmsResult.SUCCESSFUL_PROCESSED;
     private final Logger logger = LoggerFactory.getLogger(GetStatusFromProviderSmsStateProcessor.class);
 
     public GetStatusFromProviderSmsStateProcessor(SmsDao smsDao, SmsStateProcessingConfig smsStateProcessingConfig, SmsProviderService smsProviderService) {
@@ -42,11 +42,11 @@ public class GetStatusFromProviderSmsStateProcessor implements SmsStateProcessor
                     smsStateProcessingConfig.getPackageSize()
             );
             smsList.forEach(sms -> {
-                var smsStatusInfo = smsProviderService.getSmsStatus(sms.getExternalId());
+                var smsStatusInfo = smsProviderService.getSmsStatus(sms);
                 smsDao.saveSmsStatusResultInfo(sms.getSmsId(), smsStatusInfo);
             });
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error(e.toString());
         }
     }
 

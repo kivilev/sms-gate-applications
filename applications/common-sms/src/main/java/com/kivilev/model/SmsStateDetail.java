@@ -1,16 +1,15 @@
-package com.kivilev.service.model;
+package com.kivilev.model;
 
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("sms_status_result")
-public class SmsStatusResultInfo {
-
+@Table("sms_state_detail")
+public class SmsStateDetail {
     private SmsState smsState;
     private SmsResult smsResult;
     private String errorCode;
     private String errorMessage;
 
-    public SmsStatusResultInfo(SmsState smsState, SmsResult smsResult, String errorCode, String errorMessage) {
+    public SmsStateDetail(SmsState smsState, SmsResult smsResult, String errorCode, String errorMessage) {
         this.smsState = smsState;
         this.smsResult = smsResult;
         this.errorCode = errorCode;
@@ -39,6 +38,14 @@ public class SmsStatusResultInfo {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public SmsState getSmsState() {
+        return smsState;
+    }
+
+    public void setSmsState(SmsState smsState) {
+        this.smsState = smsState;
     }
 
     public SmsResult getSmsResult() {

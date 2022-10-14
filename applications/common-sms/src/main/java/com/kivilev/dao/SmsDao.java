@@ -1,18 +1,19 @@
 package com.kivilev.dao;
 
 import com.kivilev.model.Sms;
+import com.kivilev.model.SmsResult;
 import com.kivilev.model.SmsState;
-import com.kivilev.model.SmsStatusInfo;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public interface SmsDao {
     boolean isSmsExists(String source, String sourceIdempotencyKey);
 
-    List<Sms> getSmsList(Predicate<Sms> filterPredicate, int packageSize);
+    List<Sms> getSmsMessages(SmsState smsState, SmsResult smsResult, int packageSize);
 
     void saveSms(Sms sms);
 
-    void setSmsStatus(String smsId, SmsStatusInfo smsState);
+    Optional<Sms> getSms(String smsId);
 }

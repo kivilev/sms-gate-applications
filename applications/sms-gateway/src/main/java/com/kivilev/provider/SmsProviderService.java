@@ -1,10 +1,10 @@
 package com.kivilev.provider;
 
 import com.kivilev.service.model.Sms;
-import com.kivilev.service.model.SmsStatusResultInfo;
+import com.kivilev.service.model.SmsStateDetail;
 
 public interface SmsProviderService {
-    SmsStatusResultInfo sendSms(Sms sms);
+    SmsStateDetail sendSms(Sms sms);
 
-    SmsStatusResultInfo getSmsStatus(String externalId);
+    SmsStateDetail getSmsStatus(Sms sms);
 }

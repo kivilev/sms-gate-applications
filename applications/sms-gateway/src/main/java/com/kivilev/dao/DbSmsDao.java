@@ -4,7 +4,7 @@ import com.kivilev.dao.repository.SmsRepository;
 import com.kivilev.service.model.Sms;
 import com.kivilev.service.model.SmsResult;
 import com.kivilev.service.model.SmsState;
-import com.kivilev.service.model.SmsStatusResultInfo;
+import com.kivilev.service.model.SmsStateDetail;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
@@ -30,10 +30,10 @@ public class DbSmsDao implements SmsDao {
     }
 
     @Override
-    public void saveSmsStatusResultInfo(String smsId, SmsStatusResultInfo smsStatusResultInfo) {
+    public void saveSmsStatusResultInfo(String smsId, SmsStateDetail smsStateDetail) {
         var smsOptional = smsRepository.findBySmsId(smsId);
         smsOptional.ifPresent(sms -> {
-            sms.setSmsStatusInfo(smsStatusResultInfo);
+            sms.setSmsStatusDetail(smsStateDetail);
             smsRepository.save(sms);
         });
     }

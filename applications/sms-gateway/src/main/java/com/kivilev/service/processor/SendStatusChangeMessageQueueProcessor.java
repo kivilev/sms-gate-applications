@@ -2,8 +2,6 @@ package com.kivilev.service.processor;
 
 import com.kivilev.config.SmsStateProcessingConfig;
 import com.kivilev.dao.SmsDao;
-import com.kivilev.service.model.Sms;
-import com.kivilev.service.model.SmsResult;
 import com.kivilev.service.model.SmsState;
 import com.kivilev.service.queue.ProducerQueueService;
 import org.slf4j.Logger;
@@ -40,29 +38,18 @@ public class SendStatusChangeMessageQueueProcessor implements SmsStateProcessor 
 
                 logger.debug(String.format("sending sms status to queue. smsId: %s, status: %s, result: %s, error_code: %s, error_msg: %s",
                         sms.getSmsId(),
-                        sms.getSmsStatusInfo().getSmsStatus(),
-                        sms.getSmsStatusInfo().getSmsResult(),
-                        sms.getSmsStatusInfo().getErrorCode(),
-                        sms.getSmsStatusInfo().getErrorMessage()));
+                        sms.getSmsStatusDetail().getSmsStatus(),
+                        sms.getSmsStatusDetail().getSmsResult(),
+                        sms.getSmsStatusDetail().getErrorCode(),
+                        sms.getSmsStatusDetail().getErrorMessage()));
             });
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error(e.toString());
         }
     }
 
     @Override
     public SmsState getSmsState() {
         return processingSmsState;
-    }
-
-    private boolean isSmsReadyForSendingToQueue(Sms sms) {
-        var smsResult = sms.getSmsStatusInfo().getSmsResult();
-
-        boolean isDidNotSendToQueueBefore = !sms.isSendStatusToQueue();
-        boolean isErrorProcessingResult = smsResult == SmsResult.ERROR;
-        boolean isSuccessfulSendToClient = sms.getSmsStatusInfo().getSmsStatus() == SmsState.SENT_TO_CLIENT &&
-                smsResult == SmsResult.SUCCESSFUL_PROCESSED;
-
-        return isDidNotSendToQueueBefore && (isErrorProcessingResult || isSuccessfulSendToClient);
     }
 }

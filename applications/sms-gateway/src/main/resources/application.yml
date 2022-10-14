@@ -22,7 +22,7 @@ kafka:
     sms-send-topic-notification-queue-name:
       actual-name: sms-send-topic
     sms-status-topic-notification-queue:
-      actual-name: sms-status-topic
+      actual-name: sms-result-topic
 
 state-processor:
   package-size: 100

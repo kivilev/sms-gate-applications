@@ -2,14 +2,17 @@ package com.kivilev.service;
 
 import com.kivilev.dao.SmsDao;
 import com.kivilev.model.Sms;
+import com.kivilev.model.SmsResult;
 import com.kivilev.model.SmsState;
-import com.kivilev.model.SmsStatusInfo;
+import com.kivilev.model.SmsStateDetail;
 import com.kivilev.utils.MillisConstants;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+
 
 @Service
 public class IncomingRequestProcessorImpl {
@@ -22,6 +25,7 @@ public class IncomingRequestProcessorImpl {
     }
 
     @Scheduled(initialDelay = MillisConstants.SECOND * 10, fixedRate = MillisConstants.MILLIS * 10)
+    @Transactional
     void processIncomingSmsRequest() {
         var sourceId = "telegram";
         var idempotencyKey = UUID.randomUUID().toString();
@@ -31,12 +35,13 @@ public class IncomingRequestProcessorImpl {
         }
 
         smsDao.saveSms(
-                new Sms(String.valueOf(counter.incrementAndGet()),
+                new Sms(null,
                         sourceId,
                         idempotencyKey,
                         "sms text",
                         "+7-913-937-5656",
-                        new SmsStatusInfo(SmsState.NEW_SMS, null, null))
+                        new SmsStateDetail(SmsState.NEW_SMS, SmsResult.SUCCESSFUL_PROCESSED, null, null),
+                        true)
         );
     }
 }

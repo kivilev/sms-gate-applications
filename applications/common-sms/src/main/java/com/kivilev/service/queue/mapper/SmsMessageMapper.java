@@ -1,39 +1,41 @@
 package com.kivilev.service.queue.mapper;
 
 import com.kivilev.model.Sms;
-import com.kivilev.model.SmsState;
-import com.kivilev.model.SmsStatusChangeMessage;
+import com.kivilev.model.SmsResult;
+import com.kivilev.model.SmsResultChangeMessage;
+import com.kivilev.service.queue.model.SmsResultDto;
+import com.kivilev.service.queue.model.SmsResultMessageDto;
 import com.kivilev.service.queue.model.SmsSendMessageDto;
-import com.kivilev.service.queue.model.SmsStatusChangeMessageDto;
-import com.kivilev.service.queue.model.SmsStatusDto;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SmsMessageMapper {
     public SmsSendMessageDto toSmsSendMessageDto(Sms sms) {
-        return new SmsSendMessageDto(sms.getSmsId(), sms.getSourceId(), sms.getSmsText(), sms.getReceiverPhoneNumber());
+        return new SmsSendMessageDto(String.valueOf(sms.getSmsId()), sms.getSourceId(), sms.getSmsText(), sms.getReceiverPhoneNumber());
     }
 
-    public SmsStatusChangeMessage toSmsStatusChange(SmsStatusChangeMessageDto smsStatusChangeMessageDto) {
-        return new SmsStatusChangeMessage(smsStatusChangeMessageDto.smsId(),
-                mapStatusDtoToSmsStatus(smsStatusChangeMessageDto.status()),
-                smsStatusChangeMessageDto.errorCode(),
-                smsStatusChangeMessageDto.errorMessage());
+    public SmsResultChangeMessage toSmsResultChange(SmsResultMessageDto smsResultMessageDto) {
+        return new SmsResultChangeMessage(
+                smsResultMessageDto.smsId(),
+                mapStatusDtoToSmsResult(smsResultMessageDto.result()),
+                smsResultMessageDto.errorCode(),
+                smsResultMessageDto.errorMessage()
+        );
     }
 
-    private SmsState mapStatusDtoToSmsStatus(SmsStatusDto smsStatusDto) {
+    private SmsResult mapStatusDtoToSmsResult(SmsResultDto smsResultDto) {
         // TODO: бага smsStatusDto = null
-        if (smsStatusDto == null) {
-            return SmsState.SENT_TO_CLIENT;
+        if (smsResultDto == null) {
+            return SmsResult.ERROR;
         }
-        switch (smsStatusDto) {
+        switch (smsResultDto) {
             case SUCCESFULL_SEND -> {
-                return SmsState.SENT_TO_CLIENT;
+                return SmsResult.SUCCESSFUL_PROCESSED;
             }
             case ERROR -> {
-                return SmsState.ERROR;
+                return SmsResult.ERROR;
             }
-            default -> throw new IllegalStateException("Unsupported status in sms status change message");
+            default -> throw new IllegalStateException("Unsupported result in sms result change message");
         }
     }
 }

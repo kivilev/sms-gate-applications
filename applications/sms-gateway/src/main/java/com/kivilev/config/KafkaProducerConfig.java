@@ -1,6 +1,6 @@
 package com.kivilev.config;
 
-import com.kivilev.service.queue.model.SmsStatusChangeMessageDto;
+import com.kivilev.service.queue.model.SmsResultMessageDto;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -38,13 +38,13 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, SmsStatusChangeMessageDto> producerSmsSendFactory() {
+    public ProducerFactory<String, SmsResultMessageDto> producerSmsSendFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, SmsStatusChangeMessageDto> kafkaTemplate() {
-        KafkaTemplate<String, SmsStatusChangeMessageDto> template = new KafkaTemplate<>(producerSmsSendFactory());
+    public KafkaTemplate<String, SmsResultMessageDto> kafkaTemplate() {
+        KafkaTemplate<String, SmsResultMessageDto> template = new KafkaTemplate<>(producerSmsSendFactory());
         template.setMessageConverter(new StringJsonMessageConverter());
         return template;
     }

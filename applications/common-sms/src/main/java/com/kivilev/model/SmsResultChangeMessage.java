@@ -1,22 +1,24 @@
 package com.kivilev.model;
 
-public class SmsStatusInfo {
-    private SmsState smsState;
+public class SmsResultChangeMessage {
+    private String smsId;
+    private SmsResult smsResult;
     private String errorCode;
     private String errorMessage;
 
-    public SmsStatusInfo(SmsState smsState, String errorCode, String errorMessage) {
-        this.smsState = smsState;
+    public SmsResultChangeMessage(String smsId, SmsResult smsResult, String errorCode, String errorMessage) {
+        this.smsId = smsId;
+        this.smsResult = smsResult;
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
     }
 
-    public SmsState getSmsStatus() {
-        return smsState;
+    public String getSmsId() {
+        return smsId;
     }
 
-    public void setSmsStatus(SmsState smsState) {
-        this.smsState = smsState;
+    public void setSmsId(String smsId) {
+        this.smsId = smsId;
     }
 
     public String getErrorCode() {
@@ -35,4 +37,7 @@ public class SmsStatusInfo {
         this.errorMessage = errorMessage;
     }
 
+    public SmsResult getSmsResult() {
+        return smsResult;
+    }
 }

@@ -14,8 +14,8 @@ public class KafkaConfig {
         // TODO: переделать на нормальное считывание из конфига
         producerId = "sms-send-producer";
         topicsSmsSendTopicNotificationQueueActualName = "sms-send-topic";
-        topicsSmsStatusTopicNotificationQueueActualName = "sms-status-topic";
-        consumerGroupId = "common-sms-sms-status-consumer-group";
+        topicsSmsStatusTopicNotificationQueueActualName = "sms-result-topic";
+        consumerGroupId = "common-sms-sms-result-consumer-group";
     }
 
     public String getBootstrapServers() {

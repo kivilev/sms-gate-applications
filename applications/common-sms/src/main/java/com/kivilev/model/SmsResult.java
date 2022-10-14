@@ -1,7 +1,8 @@
 package com.kivilev.model;
 
 public enum SmsResult {
-    NOT_SEND(0), SEND(1), ERROR(2);
+    ERROR(0),
+    SUCCESSFUL_PROCESSED(1);
 
     private final int id;
 

@@ -1,11 +1,10 @@
 create table sms
 (
-    sms_id                  varchar(200) not null primary key,
-    external_id             varchar(200),
+    sms_id                  bigserial not null primary key,
     source_id               varchar(100) not null,
+    source_idempotency_key  varchar(100) not null,
     sms_text                text         not null,
-    receiver_phone_number   varchar(20)  not null,
-    is_send_status_to_queue boolean
+    receiver_phone_number   varchar(20)  not null
     /*create_dtime             timestamptz        not null,
     status                   smallint default 0 not null,
     send_dtime               timestamptz,
@@ -18,7 +17,7 @@ create table sms
 
 create table sms_state_detail
 (
-    sms           varchar(200) not null primary key,
+    sms           bigint not null primary key,
     sms_state     varchar(200),
     sms_result    varchar(200),
     error_code    varchar(100),

@@ -1,7 +1,8 @@
 package com.kivilev.dao;
 
 import com.kivilev.model.Sms;
-import com.kivilev.model.SmsStatusInfo;
+import com.kivilev.model.SmsResult;
+import com.kivilev.model.SmsStateDetail;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
@@ -12,9 +13,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Repository
-@Primary
-public class MemorySmsDao implements SmsDao {
-
+public class InMemorySmsDao {//implements SmsDao {
+/*
     ConcurrentMap<String, Sms> smsMap = new ConcurrentHashMap<>();
 
     @Override
@@ -37,12 +37,17 @@ public class MemorySmsDao implements SmsDao {
 
 
     @Override
-    public void setSmsStatus(String smsId, SmsStatusInfo smsStatusInfo) {
+    public void setSmsResult(String smsId, SmsStateDetail smsStateDetail) {
         var smsOptional = smsMap.values().stream().filter(sms -> sms.getSmsId().equals(smsId)).findFirst();
-        smsOptional.ifPresent(sms -> sms.setSmsStatusInfo(smsStatusInfo));
+        smsOptional.ifPresent(sms -> sms.setSmsStatusInfo(smsStateDetail));
     }
 
     private String getUniqueKey(String sourceId, String sourceIdempotencyKey) {
         return String.format("%s-%s", sourceId, sourceIdempotencyKey);
     }
+
+    @Override
+    public void setSmsResult(String smsId, SmsResult smsResult, String errorCode, String errorMessage) {
+
+    }*/
 }

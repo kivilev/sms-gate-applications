@@ -3,7 +3,7 @@ package com.kivilev.service.queue;
 import com.kivilev.config.KafkaConfig;
 import com.kivilev.service.SmsServiceImpl;
 import com.kivilev.service.queue.mapper.SmsMessageMapper;
-import com.kivilev.service.queue.model.SmsStatusChangeMessageDto;
+import com.kivilev.service.queue.model.SmsResultMessageDto;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -27,10 +27,10 @@ public class KafkaConsumerQueueService implements ConsumerQueueService {
     }
 
     // TODO: брать из конфига
-    @KafkaListener(id = "sms-status", topics = {"sms-status-topic"}, containerFactory = "batchFactory")
+    @KafkaListener(id = "sms-result", topics = {"sms-status-topic"}, containerFactory = "batchFactory")
     @Override
-    public void readSmsStatusMessages(List<SmsStatusChangeMessageDto> smsStatusChangeMessageDtos) {
-        var smsStatusChangeMessages = smsStatusChangeMessageDtos.stream().map(smsMessageMapper::toSmsStatusChange).toList();
+    public void readSmsStatusMessages(List<SmsResultMessageDto> smsResultMessageDtos) {
+        var smsStatusChangeMessages = smsResultMessageDtos.stream().map(smsMessageMapper::toSmsResultChange).toList();
         smsService.processSmsStatusMessages(smsStatusChangeMessages);
     }
 }
