@@ -1,0 +1,7 @@
+server:
+  port: 8084
+
+logging:
+  level:
+    org.springframework.jdbc.core.RestTemplate: INFO
+    com.kivilev: INFO

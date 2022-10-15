@@ -29,6 +29,7 @@ public class IncomingRequestProcessorImpl {
     void processIncomingSmsRequest() {
         var sourceId = "telegram";
         var idempotencyKey = UUID.randomUUID().toString();
+        var clientId = 1L;
 
         if (smsDao.isSmsExists(sourceId, idempotencyKey)) {
             return;
@@ -37,6 +38,7 @@ public class IncomingRequestProcessorImpl {
         smsDao.saveSms(
                 new Sms(null,
                         sourceId,
+                        clientId,
                         idempotencyKey,
                         "sms text",
                         "+7-913-937-5656",

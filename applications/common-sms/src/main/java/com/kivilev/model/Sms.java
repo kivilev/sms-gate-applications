@@ -15,6 +15,8 @@ public class Sms implements Persistable<Long> {
     @Nonnull
     private Long smsId;
     @Nonnull
+    private Long clientId;
+    @Nonnull
     private String sourceId;
     @Nonnull
     private String sourceIdempotencyKey;
@@ -27,8 +29,9 @@ public class Sms implements Persistable<Long> {
     @Transient
     private boolean isNew = true;
 
-    public Sms(Long smsId, String sourceId, String sourceIdempotencyKey, String smsText, String receiverPhoneNumber, SmsStateDetail smsStateDetail, boolean isNew) {
+    public Sms(Long smsId, String sourceId, Long clientId, String sourceIdempotencyKey, String smsText, String receiverPhoneNumber, SmsStateDetail smsStateDetail, boolean isNew) {
         this.smsId = smsId;
+        this.clientId = clientId;
         this.sourceId = sourceId;
         this.sourceIdempotencyKey = sourceIdempotencyKey;
         this.smsText = smsText;
@@ -38,8 +41,8 @@ public class Sms implements Persistable<Long> {
     }
 
     @PersistenceCreator
-    public Sms(Long smsId, String sourceId, String sourceIdempotencyKey, String smsText, String receiverPhoneNumber, SmsStateDetail smsStateDetail) {
-        this(smsId, sourceId, sourceIdempotencyKey, smsText, receiverPhoneNumber, smsStateDetail, false);
+    public Sms(Long smsId, String sourceId, Long clientId, String sourceIdempotencyKey, String smsText, String receiverPhoneNumber, SmsStateDetail smsStateDetail) {
+        this(smsId, sourceId, clientId, sourceIdempotencyKey, smsText, receiverPhoneNumber, smsStateDetail, false);
     }
 
     public Long getSmsId() {
@@ -88,6 +91,11 @@ public class Sms implements Persistable<Long> {
 
     public void setSourceIdempotencyKey(String sourceIdempotencyKey) {
         this.sourceIdempotencyKey = sourceIdempotencyKey;
+    }
+
+    @Nonnull
+    public Long getClientId() {
+        return clientId;
     }
 
     @Override
