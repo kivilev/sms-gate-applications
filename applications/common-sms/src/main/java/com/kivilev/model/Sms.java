@@ -15,21 +15,33 @@ public class Sms implements Persistable<Long> {
     @Nonnull
     private Long smsId;
     @Nonnull
-    private Long clientId;
+    private final Long clientId;
     @Nonnull
-    private String sourceId;
+    private final String sourceId;
     @Nonnull
-    private String sourceIdempotencyKey;
+    private final String sourceIdempotencyKey;
     @Nonnull
-    private String smsText;
+    private final String smsText;
     @Nonnull
-    private String receiverPhoneNumber;
+    private final String receiverPhoneNumber;
+
+    @Nonnull
+    private final String createDateTime;
+    private final String changeStatusDateTime;
+
+    /*
+    TODO: переписать на нормальное использование дат
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private final String createDateTime;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private final String changeStatusDateTime;*/
+
     private SmsStateDetail smsStateDetail;
 
     @Transient
-    private boolean isNew = true;
+    private boolean isNew = true;// TODO: скорее всего не нужно
 
-    public Sms(Long smsId, String sourceId, Long clientId, String sourceIdempotencyKey, String smsText, String receiverPhoneNumber, SmsStateDetail smsStateDetail, boolean isNew) {
+    public Sms(Long smsId, String sourceId, Long clientId, String sourceIdempotencyKey, String smsText, String receiverPhoneNumber, SmsStateDetail smsStateDetail, String createDateTime, String changeStatusDateTime, boolean isNew) {
         this.smsId = smsId;
         this.clientId = clientId;
         this.sourceId = sourceId;
@@ -38,11 +50,13 @@ public class Sms implements Persistable<Long> {
         this.receiverPhoneNumber = receiverPhoneNumber;
         this.smsStateDetail = smsStateDetail;
         this.isNew = isNew;
+        this.createDateTime = createDateTime;
+        this.changeStatusDateTime = changeStatusDateTime;
     }
 
     @PersistenceCreator
-    public Sms(Long smsId, String sourceId, Long clientId, String sourceIdempotencyKey, String smsText, String receiverPhoneNumber, SmsStateDetail smsStateDetail) {
-        this(smsId, sourceId, clientId, sourceIdempotencyKey, smsText, receiverPhoneNumber, smsStateDetail, false);
+    public Sms(Long smsId, String sourceId, Long clientId, String sourceIdempotencyKey, String smsText, String receiverPhoneNumber, SmsStateDetail smsStateDetail, String createDateTime, String changeStatusDateTime) {
+        this(smsId, sourceId, clientId, sourceIdempotencyKey, smsText, receiverPhoneNumber, smsStateDetail, createDateTime, changeStatusDateTime, false);
     }
 
     public Long getSmsId() {
@@ -57,24 +71,12 @@ public class Sms implements Persistable<Long> {
         return sourceId;
     }
 
-    public void setSourceId(String sourceId) {
-        this.sourceId = sourceId;
-    }
-
     public String getSmsText() {
         return smsText;
     }
 
-    public void setSmsText(String smsText) {
-        this.smsText = smsText;
-    }
-
     public String getReceiverPhoneNumber() {
         return receiverPhoneNumber;
-    }
-
-    public void setReceiverPhoneNumber(String receiverPhoneNumber) {
-        this.receiverPhoneNumber = receiverPhoneNumber;
     }
 
     public SmsStateDetail getSmsStatusInfo() {
@@ -87,10 +89,6 @@ public class Sms implements Persistable<Long> {
 
     public String getSourceIdempotencyKey() {
         return sourceIdempotencyKey;
-    }
-
-    public void setSourceIdempotencyKey(String sourceIdempotencyKey) {
-        this.sourceIdempotencyKey = sourceIdempotencyKey;
     }
 
     @Nonnull
@@ -119,5 +117,13 @@ public class Sms implements Persistable<Long> {
     @Override
     public int hashCode() {
         return Objects.hash(smsId);
+    }
+
+    public String getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public String getChangeStatusDateTime() {
+        return changeStatusDateTime;
     }
 }

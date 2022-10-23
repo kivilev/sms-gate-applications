@@ -4,21 +4,23 @@ import java.time.ZonedDateTime;
 
 public class Sms {
     private Long smsId;
-    private Long clientId;
-    private String idempotencyKey;
-    private String smsText;
+    private final Long clientId;
+    private String sourceId;
+    private final String idempotencyKey;
+    private final String smsText;
     private SmsStatus smsStatus;
-    private String receiverPhoneNumber;
+    private final String receiverPhoneNumber;
     private ZonedDateTime createDateTime;
     private ZonedDateTime sendReceiverDateTime;
 
-    public Sms(Long clientId, String idempotencyKey, String smsText, String receiverPhoneNumber, SmsStatus smsStatus) {
-        this(null, clientId, idempotencyKey, smsText, smsStatus, receiverPhoneNumber, null, null);
+    public Sms(Long clientId, String sourceId, String idempotencyKey, String smsText, String receiverPhoneNumber, SmsStatus smsStatus) {
+        this(null, clientId, sourceId, idempotencyKey, smsText, receiverPhoneNumber, smsStatus, null, null);
     }
 
-    public Sms(Long smsId, Long clientId, String idempotencyKey, String smsText, SmsStatus smsStatus, String receiverPhoneNumber, ZonedDateTime createDateTime, ZonedDateTime sendReceiverDateTime) {
+    public Sms(Long smsId, Long clientId, String sourceId, String idempotencyKey, String smsText, String receiverPhoneNumber, SmsStatus smsStatus, ZonedDateTime createDateTime, ZonedDateTime sendReceiverDateTime) {
         this.smsId = smsId;
         this.clientId = clientId;
+        this.sourceId = sourceId;
         this.idempotencyKey = idempotencyKey;
         this.smsText = smsText;
         this.smsStatus = smsStatus;
@@ -59,27 +61,27 @@ public class Sms {
         this.smsId = smsId;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
-    }
-
-    public void setSmsText(String smsText) {
-        this.smsText = smsText;
-    }
-
-    public void setSmsStatus(SmsStatus smsStatus) {
-        this.smsStatus = smsStatus;
-    }
-
-    public void setReceiverPhoneNumber(String receiverPhoneNumber) {
-        this.receiverPhoneNumber = receiverPhoneNumber;
-    }
-
     public void setCreateDateTime(ZonedDateTime createDateTime) {
         this.createDateTime = createDateTime;
     }
 
     public void setSendReceiverDateTime(ZonedDateTime sendReceiverDateTime) {
         this.sendReceiverDateTime = sendReceiverDateTime;
+    }
+
+    public String getIdempotencyKey() {
+        return idempotencyKey;
+    }
+
+    public String getSourceId() {
+        return sourceId;
+    }
+
+    public void setSmsStatus(SmsStatus smsStatus) {
+        this.smsStatus = smsStatus;
+    }
+
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
     }
 }

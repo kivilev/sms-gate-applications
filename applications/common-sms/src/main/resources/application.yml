@@ -6,13 +6,9 @@ spring:
   flyway:
     enabled: true
 
-server:
-  port: 8084
-
-logging:
-  level:
-    org.springframework.jdbc.core.JdbcTemplate: INFO
-    com.kivilev: INFO
+grpc:
+  server:
+    port: 6565
 
 kafka:
   bootstrap-servers: localhost:9092
@@ -26,3 +22,8 @@ kafka:
       actual-name: sms-send-topic
     sms-status-topic-notification-queue:
       actual-name: sms-result-topic
+
+logging:
+  level:
+    org.springframework.jdbc.core.JdbcTemplate: WARN
+    com.kivilev: DEBUG

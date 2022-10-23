@@ -17,7 +17,9 @@ public interface SmsRepository extends CrudRepository<Sms, String> {
     @Transactional(timeout = 10)
     Optional<Sms> findBySmsId(@Nonnull String smsId);
 
-    Optional<Sms> findBySourceIdAndSourceIdempotencyKey(String sourceId, String sourceIdempotencyKey);
+    Optional<Sms> findByClientIdAndSourceIdAndSourceIdempotencyKey(Long clientId, String sourceId, String sourceIdempotencyKey);
+
+    List<Sms> findByClientId(Long clientId);//, int limit);// TODO: сделать limit
 
     @Transactional(timeout = 10)
     @Query("""
@@ -34,22 +36,4 @@ public interface SmsRepository extends CrudRepository<Sms, String> {
             limit :p_limit   
             """)
     List<Sms> findAllBySmsStateAndResult(@Param("p_state") SmsState smsState, @Param("p_result") SmsResult smsResult, @Param("p_limit") int rowsNumber);
-
-    @Transactional(timeout = 10)
-    @Query("""
-            select s.*,
-                   sr.sms             AS "smsstatusresultinfo_sms",
-                   sr."sms_state"     AS "smsstatusresultinfo_sms_state",
-                   sr."error_code"    AS "smsstatusresultinfo_error_code",
-                   sr."sms_result"    AS "smsstatusresultinfo_sms_result",
-                   sr."error_message" AS "smsstatusresultinfo_error_message"
-             from sms s 
-             left join sms_state_detail sr ON sr.sms = s."sms_id" 
-            where s.is_send_status_to_queue = false 
-              and (sr.sms_result = 'ERROR' or 
-                   (sr.sms_state = 'SENT_TO_CLIENT' and sr.sms_result = 'SUCCESSFUL_PROCESSED')) 
-            limit :p_limit                
-            """)
-    List<Sms> findAllSmsReadyForSendingQueue(@Param("p_limit") int packageSize);
-    // TODO: без учета TTL-сообщений (и индекса по этому полю) запрос начнет со временем тормозить
 }

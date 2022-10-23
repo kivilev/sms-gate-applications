@@ -15,7 +15,7 @@ public class Sms implements Persistable<String> {
     @Id
     @Nonnull
     private String smsId;
-    private String externalId;//TODO: provider_external_id
+    private String providerExternalId;
     @Nonnull
     private String sourceId;
     @Nonnull
@@ -32,7 +32,7 @@ public class Sms implements Persistable<String> {
     private boolean isNew = true;
 
     public Sms(@Nonnull String smsId,
-               String externalId,
+               String providerExternalId,
                @Nonnull String sourceId,
                @Nonnull String smsText,
                @Nonnull String receiverPhoneNumber,
@@ -40,7 +40,7 @@ public class Sms implements Persistable<String> {
                boolean isSendStatusToQueue,
                boolean isNew) {
         this.smsId = smsId;
-        this.externalId = externalId;
+        this.providerExternalId = providerExternalId;
         this.sourceId = sourceId;
         this.smsText = smsText;
         this.receiverPhoneNumber = receiverPhoneNumber;
@@ -51,13 +51,13 @@ public class Sms implements Persistable<String> {
 
     @PersistenceCreator
     private Sms(@Nonnull String smsId,
-                String externalId,
+                String providerExternalId,
                 @Nonnull String sourceId,
                 @Nonnull String smsText,
                 @Nonnull String receiverPhoneNumber,
                 SmsStateDetail smsStateDetail,
                 boolean isSendStatusToQueue) {
-        this(smsId, externalId, sourceId, smsText, receiverPhoneNumber, smsStateDetail, isSendStatusToQueue, false);
+        this(smsId, providerExternalId, sourceId, smsText, receiverPhoneNumber, smsStateDetail, isSendStatusToQueue, false);
     }
 
     public SmsStateDetail getSmsStatusDetail() {
@@ -76,12 +76,12 @@ public class Sms implements Persistable<String> {
         this.smsId = smsId;
     }
 
-    public String getExternalId() {
-        return externalId;
+    public String getProviderExternalId() {
+        return providerExternalId;
     }
 
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
+    public void setProviderExternalId(String providerExternalId) {
+        this.providerExternalId = providerExternalId;
     }
 
     public String getSourceId() {

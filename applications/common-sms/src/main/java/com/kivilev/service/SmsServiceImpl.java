@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -30,6 +31,22 @@ public class SmsServiceImpl implements SmsService {
     public SmsServiceImpl(ProducerQueueSmsService producerQueueSmsService, SmsDao smsDao) {
         this.producerQueueSmsService = producerQueueSmsService;
         this.smsDao = smsDao;
+    }
+
+    @Override
+    @Transactional
+    public Sms processIncomingSmsRequest(Sms sms) {
+        var smsOptional = smsDao.getSms(sms.getClientId(), sms.getSourceId(), sms.getSourceIdempotencyKey());
+        if (smsOptional.isPresent()) {
+            return smsOptional.get();
+        }
+        smsDao.saveSms(sms);
+        return sms;
+    }
+
+    @Override
+    public List<Sms> getSmsMessages(Long clientId, int limit) {
+        return smsDao.getSmsMessages(clientId, limit);
     }
 
     @Override

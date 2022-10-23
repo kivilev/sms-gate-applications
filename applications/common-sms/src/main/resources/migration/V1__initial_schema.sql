@@ -1,22 +1,20 @@
 create table sms
 (
-    sms_id                 bigserial    not null primary key,
-    client_id              bigint       not null,
-    source_id              varchar(100) not null,
-    source_idempotency_key varchar(100) not null,
-    sms_text               text         not null,
-    receiver_phone_number  varchar(20)  not null
-    /*create_dtime             timestamptz        not null,
-    status                   smallint default 0 not null,
-    send_dtime               timestamptz,
-    last_change_status_dtime timestamptz,
-    error_message         varchar(1000),
-    error_code            varchar(100),
+    sms_id                  bigserial    not null primary key,
+    client_id               bigint       not null,
+    source_id               varchar(100) not null,
+    source_idempotency_key  varchar(100) not null,
+    sms_text                text         not null,
+    receiver_phone_number   varchar(20)  not null,
+    create_date_time        varchar(30) not null, --timestamptz  not null,
+    change_status_date_time varchar(30) --timestamptz
+    /*
     cost                  numeric(5, 2)*/
 );
 
-alter table sms add constraint sms_idempotency_key_uq unique (source_idempotency_key, source_id);
-create index sms_client_id_idx on sms(client_id);
+alter table sms
+    add constraint sms_idempotency_key_uq unique (source_idempotency_key, client_id, source_id);
+create index sms_client_id_idx on sms (client_id);
 
 
 create table sms_state_detail

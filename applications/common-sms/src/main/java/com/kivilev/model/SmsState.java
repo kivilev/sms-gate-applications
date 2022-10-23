@@ -5,7 +5,7 @@ public enum SmsState {
     SENT_TO_SMS_GATE(1),
     SENT_TO_CLIENT(2);
 
-    private int id;
+    private final int id;
 
     SmsState(int id) {
         this.id = id;

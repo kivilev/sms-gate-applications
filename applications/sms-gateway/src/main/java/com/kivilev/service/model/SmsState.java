@@ -6,7 +6,7 @@ public enum SmsState {
     SENT_TO_CLIENT(2),
     SENT_STATUS_TO_QUEUE(3);
 
-    private int id;
+    private final int id;
 
     SmsState(int id) {
         this.id = id;

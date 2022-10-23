@@ -8,5 +8,5 @@ public interface CommonSmsService {
 
     Sms sendSms(Sms sms);
 
-    List<Sms> getSmsMessages(Long clientId, Long limit);
+    List<Sms> getSmsMessages(Long clientId, int limit);
 }

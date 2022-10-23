@@ -7,5 +7,5 @@ import java.util.List;
 public interface SmsService {
     Sms sendNewSms(Sms sms);
 
-    List<Sms> getSmsMessages(Long clientId, Long limit);
+    List<Sms> getSmsMessages(Long clientId, int limit);
 }

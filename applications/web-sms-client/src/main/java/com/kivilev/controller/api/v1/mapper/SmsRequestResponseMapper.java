@@ -12,11 +12,11 @@ public class SmsRequestResponseMapper {
 
     public Sms toSms(SendNewSmsRequestDto sendNewSmsRequestDto) {
         return new Sms(sendNewSmsRequestDto.clientId(),
+                null,
                 sendNewSmsRequestDto.idempotencyKey(),
                 sendNewSmsRequestDto.smsText(),
                 sendNewSmsRequestDto.receiverPhoneNumber(),
-                SmsStatus.READY_PROCESSING
-        );
+                SmsStatus.PROCESSING);
     }
 
     public SendNewSmsResponseDto toSendNewSmsResponseDto(Sms sms) {
@@ -27,7 +27,7 @@ public class SmsRequestResponseMapper {
         return switch (smsStatus) {
             case FAILED -> SmsStatusDto.FAILED;
             case SENT -> SmsStatusDto.SENT;
-            case READY_PROCESSING -> SmsStatusDto.WAITING;
+            case PROCESSING -> SmsStatusDto.WAITING;
         };
     }
 }

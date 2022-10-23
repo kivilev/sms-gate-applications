@@ -26,3 +26,6 @@ kafka:
 
 state-processor:
   package-size: 100
+
+server:
+  port: 0

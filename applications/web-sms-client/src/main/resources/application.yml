@@ -1,5 +1,13 @@
 server:
   port: 8084
+  error:
+    include-message: always
+
+grpc:
+  client:
+    common-sms-service:
+      address: static://localhost:6565
+      negotiationType: plaintext
 
 logging:
   level:

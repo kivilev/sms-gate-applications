@@ -21,8 +21,8 @@ public class DbSmsDao implements SmsDao {
     }
 
     @Override
-    public boolean isSmsExists(String sourceId, String sourceIdempotencyKey) {
-        return smsRepository.findBySourceIdAndSourceIdempotencyKey(sourceId, sourceIdempotencyKey).isPresent();
+    public Optional<Sms> getSms(Long clientId, String sourceId, String sourceIdempotencyKey) {
+        return smsRepository.findByClientIdAndSourceIdAndSourceIdempotencyKey(clientId, sourceId, sourceIdempotencyKey);
     }
 
     @Override
@@ -40,4 +40,8 @@ public class DbSmsDao implements SmsDao {
         return smsRepository.findById(smsId);
     }
 
+    @Override
+    public List<Sms> getSmsMessages(Long clientId, int limit) {
+        return smsRepository.findByClientId(clientId);
+    }
 }

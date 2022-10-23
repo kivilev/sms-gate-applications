@@ -1,0 +1,21 @@
+### отправка смс
+POST http://localhost:8084/api/v1/sms
+Content-Type: application/json
+
+{
+  "clientId": 1,
+  "smsText": "Привет! это тестовая SMS",
+  "receiverPhoneNumber": "+7-999-999-00-00",
+  "idempotencyKey": "key-433"
+}
+
+
+### получение списка sms по клиенту
+GET http://localhost:8084/api/v1/client/1/sms?limit=10
+Accept: application/json
+
+
+### получение списка sms по клиенту, которого нет (>10) -> ошибка
+GET http://localhost:8084/api/v1/client/1222/sms?limit=10
+Accept: application/json
+

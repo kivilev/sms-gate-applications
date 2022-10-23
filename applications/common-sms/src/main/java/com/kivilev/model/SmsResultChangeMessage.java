@@ -2,7 +2,7 @@ package com.kivilev.model;
 
 public class SmsResultChangeMessage {
     private String smsId;
-    private SmsResult smsResult;
+    private final SmsResult smsResult;
     private String errorCode;
     private String errorMessage;
 

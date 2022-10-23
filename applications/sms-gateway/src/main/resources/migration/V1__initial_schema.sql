@@ -1,7 +1,7 @@
 create table sms
 (
     sms_id                  varchar(200) not null primary key,
-    external_id             varchar(200),
+    provider_external_id    varchar(200),
     source_id               varchar(100) not null,
     sms_text                text         not null,
     receiver_phone_number   varchar(20)  not null,
@@ -14,7 +14,7 @@ create table sms
     error_code            varchar(100),
     cost                  numeric(5, 2)*/
 );
-
+create index provider_external_id_idx on sms (provider_external_id);
 
 create table sms_state_detail
 (

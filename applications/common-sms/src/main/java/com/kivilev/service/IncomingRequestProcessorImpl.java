@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class IncomingRequestProcessorImpl {
-
+/*
     private final SmsDao smsDao;
     private final AtomicInteger counter = new AtomicInteger(0);
 
@@ -45,5 +45,5 @@ public class IncomingRequestProcessorImpl {
                         new SmsStateDetail(SmsState.NEW_SMS, SmsResult.SUCCESSFUL_PROCESSED, null, null),
                         true)
         );
-    }
+    }*/
 }

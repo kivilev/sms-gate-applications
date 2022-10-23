@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package com.kivilev.protobuf.generated;
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+
+enum SmsStatus {
+  PROCESSING = 0;
+  SENT = 1;
+  FAILED = 2;
+}
+
+message SendSmsRequest {
+  int64 clientId = 1;
+  string source = 2;
+  string idempotencyKey = 3;
+  string smsText = 4;
+  string receiverPhoneNumber = 5;
+  google.protobuf.Timestamp createDateTime = 6;
+}
+
+message GetSmsStatusMessageRequest {
+  int64 clientId = 1;
+  int32 limit = 2;
+}
+
+message SmsMessageResponse {
+  int64 smsId = 1;
+  int64 clientId = 2;
+  string source = 3;
+  string idempotencyKey = 4;
+  string smsText = 5;
+  string receiverPhoneNumber = 6;
+  google.protobuf.Timestamp createDateTime = 7;
+  google.protobuf.Timestamp sendReceiverDateTime = 8;
+  SmsStatus status = 9;
+}
+
+service SmsSendService {
+  rpc sendSms(SendSmsRequest) returns (SmsMessageResponse);
+  rpc getSmsMessageStatus(GetSmsStatusMessageRequest) returns (stream SmsMessageResponse);
+}
