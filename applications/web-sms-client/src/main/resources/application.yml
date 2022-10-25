@@ -1,0 +1,17 @@
+server:
+  port: 8084
+  error:
+    include-message: always
+
+grpc:
+  client:
+    common-sms-service:
+      address: static://localhost:6565
+      negotiationType: plaintext
+  server:
+    port: 0
+
+logging:
+  level:
+    org.springframework.jdbc.core.RestTemplate: INFO
+    com.kivilev: INFO

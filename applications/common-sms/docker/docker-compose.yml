@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  common-sms-db:
+    image: postgres:14
+    container_name: common-sms-db-docker
+    ports:
+      - "5441:5432"
+    environment:
+      POSTGRES_DB: common-sms-db
+      POSTGRES_USER: common-sms-user
+      POSTGRES_PASSWORD: common-sms-user-pwd

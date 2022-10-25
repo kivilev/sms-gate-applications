@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5440/sms-gateway-db
+    username: sms-gateway-user
+    password: sms-gateway-user-pwd
+  flyway:
+    enabled: true
+
+logging:
+  level:
+    org.springframework.jdbc.core.JdbcTemplate: INFO
+    com.kivilev: INFO
+
+kafka:
+  bootstrap-servers: localhost:9092
+  producer:
+    acks: all
+    id: sms-status-producer
+  consumer:
+    group-id: sms-gateway-sms-send-consumer-group
+  topics:
+    sms-send-topic-notification-queue-name:
+      actual-name: sms-send-topic
+    sms-status-topic-notification-queue:
+      actual-name: sms-result-topic
+
+state-processor:
+  package-size: 100
+
+server:
+  port: 0

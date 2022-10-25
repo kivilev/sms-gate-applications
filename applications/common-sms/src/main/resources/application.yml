@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5441/common-sms-db
+    username: common-sms-user
+    password: common-sms-user-pwd
+  flyway:
+    enabled: true
+
+grpc:
+  server:
+    port: 6565
+
+kafka:
+  bootstrap-servers: localhost:9092
+  producer:
+    acks: all
+    id: sms-send-producer
+  consumer:
+    group-id: common-sms-sms-result-consumer-group
+  topics:
+    sms-send-topic-notification-queue-name:
+      actual-name: sms-send-topic
+    sms-status-topic-notification-queue:
+      actual-name: sms-result-topic
+
+logging:
+  level:
+    org.springframework.jdbc.core.JdbcTemplate: INFO
+    com.kivilev: INFO

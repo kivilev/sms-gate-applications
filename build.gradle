@@ -2,10 +2,9 @@ plugins {
     id 'idea'
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id 'org.springframework.boot' version '2.6.6' apply false
-    id 'com.github.johnrengelman.shadow' version '7.1.2' apply false
     id 'com.google.cloud.tools.jib' version '3.2.1' apply false
-    id 'io.freefair.lombok' version '6.4.2' apply false
 }
+
 
 idea {
     project {
@@ -18,7 +17,7 @@ idea {
 }
 
 allprojects {
-    group "ru.otus.kivilev"
+    group "com.kivilev"
 
     repositories {
         mavenLocal()
@@ -33,19 +32,19 @@ allprojects {
                 mavenBom "org.testcontainers:testcontainers-bom:1.17.1"
                 mavenBom "com.google.protobuf:protobuf-bom:3.21.1"
             }
-            dependency "com.google.guava:guava:${Versions.guava}"
-            dependency "org.ow2.asm:asm-commons:${Versions.asm}"
-            dependency("org.glassfish:jakarta.json:${Versions.glassfishJson}")
-            dependency("org.webjars:sockjs-client:${Versions.sockjs}")
-            dependency("org.webjars:stomp-websocket:${Versions.stomp}")
+
+            dependency("com.fasterxml.jackson.core:jackson-databind:${Versions.jackson}")
+
             dependency("org.webjars:bootstrap:${Versions.bootstrap}")
+
             dependency("org.springdoc:springdoc-openapi-ui:${Versions.springDocOpenapiUi}")
             dependency("com.google.code.findbugs:jsr305:${Versions.jsr305}")
+            dependency("org.springframework.kafka:spring-kafka:${Versions.springKafka}")
 
-            dependency("io.grpc:grpc-netty:${Versions.grpc}")
-            dependency("io.grpc:grpc-protobuf:${Versions.grpc}")
-            dependency("io.grpc:grpc-stub:${Versions.grpc}")
             dependency("ch.qos.logback:logback-classic:${Versions.logBackClassic}")
+
+            dependency("net.devh:grpc-server-spring-boot-starter:${Versions.grpcSpringBoot}")
+            dependency("net.devh:grpc-client-spring-boot-starter:${Versions.grpcSpringBoot}")
         }
     }
 }

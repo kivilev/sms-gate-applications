@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+dependencies {
+    implementation('ch.qos.logback:logback-classic')
+    implementation("com.fasterxml.jackson.core:jackson-databind")
+
+    implementation('net.devh:grpc-server-spring-boot-starter')
+    implementation('org.springframework.boot:spring-boot-starter-data-jdbc')
+    implementation('org.springframework.boot:spring-boot-starter-test')
+
+    implementation('org.flywaydb:flyway-core')
+    implementation('org.postgresql:postgresql')
+    implementation('org.springframework.kafka:spring-kafka')
+
+    implementation('com.google.code.findbugs:jsr305')
+
+    implementation project(':proto-models')
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.with {
+        encoding = 'UTF-8'
+    }
+}
