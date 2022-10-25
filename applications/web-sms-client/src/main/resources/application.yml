@@ -8,6 +8,8 @@ grpc:
     common-sms-service:
       address: static://localhost:6565
       negotiationType: plaintext
+  server:
+    port: 0
 
 logging:
   level:

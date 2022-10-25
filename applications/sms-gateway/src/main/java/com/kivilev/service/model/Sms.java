@@ -17,23 +17,17 @@ public class Sms implements Persistable<String> {
     private String smsId;
     private String providerExternalId;
     @Nonnull
-    private String sourceId;
-    @Nonnull
     private String smsText;
     @Nonnull
     private String receiverPhoneNumber;
-
     private SmsStateDetail smsStateDetail;
-
     @Nonnull
     private boolean isSendStatusToQueue;
-
     @Transient
     private boolean isNew = true;
 
     public Sms(@Nonnull String smsId,
                String providerExternalId,
-               @Nonnull String sourceId,
                @Nonnull String smsText,
                @Nonnull String receiverPhoneNumber,
                SmsStateDetail smsStateDetail,
@@ -41,7 +35,6 @@ public class Sms implements Persistable<String> {
                boolean isNew) {
         this.smsId = smsId;
         this.providerExternalId = providerExternalId;
-        this.sourceId = sourceId;
         this.smsText = smsText;
         this.receiverPhoneNumber = receiverPhoneNumber;
         this.smsStateDetail = smsStateDetail;
@@ -52,12 +45,11 @@ public class Sms implements Persistable<String> {
     @PersistenceCreator
     private Sms(@Nonnull String smsId,
                 String providerExternalId,
-                @Nonnull String sourceId,
                 @Nonnull String smsText,
                 @Nonnull String receiverPhoneNumber,
                 SmsStateDetail smsStateDetail,
                 boolean isSendStatusToQueue) {
-        this(smsId, providerExternalId, sourceId, smsText, receiverPhoneNumber, smsStateDetail, isSendStatusToQueue, false);
+        this(smsId, providerExternalId, smsText, receiverPhoneNumber, smsStateDetail, isSendStatusToQueue, false);
     }
 
     public SmsStateDetail getSmsStatusDetail() {
@@ -82,14 +74,6 @@ public class Sms implements Persistable<String> {
 
     public void setProviderExternalId(String providerExternalId) {
         this.providerExternalId = providerExternalId;
-    }
-
-    public String getSourceId() {
-        return sourceId;
-    }
-
-    public void setSourceId(String sourceId) {
-        this.sourceId = sourceId;
     }
 
     public String getSmsText() {

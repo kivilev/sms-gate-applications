@@ -38,9 +38,11 @@ public class SmsServiceImpl implements SmsService {
     public Sms processIncomingSmsRequest(Sms sms) {
         var smsOptional = smsDao.getSms(sms.getClientId(), sms.getSourceId(), sms.getSourceIdempotencyKey());
         if (smsOptional.isPresent()) {
+            logger.debug(String.format("Processing income sms. Sms already existed. SmsId: %s", smsOptional.get().getSmsId()));
             return smsOptional.get();
         }
         smsDao.saveSms(sms);
+        logger.debug(String.format("Processing income sms. New sms. SmsId: %s", sms.getSmsId()));
         return sms;
     }
 
@@ -61,7 +63,7 @@ public class SmsServiceImpl implements SmsService {
         smsListForSending.forEach(sms -> {
             sms.setSmsStatusInfo(new SmsStateDetail(SmsState.SENT_TO_SMS_GATE, SmsResult.SUCCESSFUL_PROCESSED, null, null));
             smsDao.saveSms(sms);
-            logger.debug(String.format("Sending sms to kafka. smsId: %s", sms.getSmsId()));
+            logger.debug(String.format("Sending sms to kafka. SmsId: %s", sms.getSmsId()));
         });
     }
 
@@ -76,7 +78,7 @@ public class SmsServiceImpl implements SmsService {
                 sms.getSmsStatusInfo().setErrorMessage(message.getErrorMessage());
                 smsDao.saveSms(sms);
             });
-            logger.debug(String.format("got sms result change message. smsId: %s", message.getSmsId()));
+            logger.debug(String.format("Getting sms result change message. SmsId: %s", message.getSmsId()));
         });
     }
 }

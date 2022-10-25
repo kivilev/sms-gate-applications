@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  sms-gateway-db:
+    image: postgres:14
+    container_name: sms-gateway-db-docker
+    ports:
+      - "5440:5432"
+    environment:
+      POSTGRES_DB: sms-gateway-db
+      POSTGRES_USER: sms-gateway-user
+      POSTGRES_PASSWORD: sms-gateway-user-pwd

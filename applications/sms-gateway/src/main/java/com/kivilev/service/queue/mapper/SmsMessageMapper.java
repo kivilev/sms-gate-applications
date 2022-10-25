@@ -23,7 +23,6 @@ public class SmsMessageMapper {
         var smsStatusInfo = new SmsStateDetail(SmsState.NEW_FROM_QUEUE, SmsResult.SUCCESSFUL_PROCESSED, null, null);
         return new Sms(smsSendMessageDto.smsId(),
                 null,
-                smsSendMessageDto.sourceId(),
                 smsSendMessageDto.smsText(),
                 smsSendMessageDto.receiverPhoneNumber(),
                 smsStatusInfo,

@@ -2,7 +2,6 @@ create table sms
 (
     sms_id                  varchar(200) not null primary key,
     provider_external_id    varchar(200),
-    source_id               varchar(100) not null,
     sms_text                text         not null,
     receiver_phone_number   varchar(20)  not null,
     is_send_status_to_queue boolean

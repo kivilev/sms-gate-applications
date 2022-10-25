@@ -24,10 +24,6 @@ public class SmsMessageMapper {
     }
 
     private SmsResult mapStatusDtoToSmsResult(SmsResultDto smsResultDto) {
-        // TODO: бага smsStatusDto = null
-        if (smsResultDto == null) {
-            return SmsResult.ERROR;
-        }
         switch (smsResultDto) {
             case SUCCESFULL_SEND -> {
                 return SmsResult.SUCCESSFUL_PROCESSED;

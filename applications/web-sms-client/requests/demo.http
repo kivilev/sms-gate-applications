@@ -6,7 +6,7 @@ Content-Type: application/json
   "clientId": 1,
   "smsText": "Привет! это тестовая SMS",
   "receiverPhoneNumber": "+7-999-999-00-00",
-  "idempotencyKey": "key-433"
+  "idempotencyKey": "key-9"
 }
 
 

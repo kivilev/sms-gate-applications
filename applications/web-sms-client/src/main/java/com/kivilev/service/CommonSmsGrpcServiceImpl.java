@@ -12,14 +12,14 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 @Service
-public class CommonSmsServiceImpl implements CommonSmsService {
+public class CommonSmsGrpcServiceImpl implements CommonSmsService {
 
     //  TODO: вынести в конфиг
     @GrpcClient("common-sms-service")
     private SmsSendServiceGrpc.SmsSendServiceBlockingStub smsSendServiceStub;
     private final GrpcObjectMapper grpcObjectMapper;
 
-    public CommonSmsServiceImpl(GrpcObjectMapper grpcObjectMapper) {
+    public CommonSmsGrpcServiceImpl(GrpcObjectMapper grpcObjectMapper) {
         this.grpcObjectMapper = grpcObjectMapper;
     }
 

@@ -25,5 +25,5 @@ kafka:
 
 logging:
   level:
-    org.springframework.jdbc.core.JdbcTemplate: WARN
-    com.kivilev: DEBUG
+    org.springframework.jdbc.core.JdbcTemplate: INFO
+    com.kivilev: INFO
