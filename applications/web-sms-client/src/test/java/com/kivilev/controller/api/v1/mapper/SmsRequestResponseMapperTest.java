@@ -17,11 +17,11 @@ class SmsRequestResponseMapperTest {
 
     private final SmsRequestResponseMapper smsRequestResponseMapper = new SmsRequestResponseMapper();
 
-    private final static Clock clock = Clock.systemUTC();
-    private final static Long CLIENT_ID = 1L;
-    private final static String SMS_TEXT = "sms-text";
-    private final static String RECEIVER_PHONE_NUMBER = "0000000";
-    private final static String IDEMPOTENCY_KEY = "key";
+    private static final Clock clock = Clock.systemUTC();
+    private static final Long CLIENT_ID = 1L;
+    private static final String SMS_TEXT = "sms-text";
+    private static final String RECEIVER_PHONE_NUMBER = "0000000";
+    private static final String IDEMPOTENCY_KEY = "key";
     private static final Long SMS_ID = 2L;
     private static final String SOURCE_ID = "sourceId";
     private static final SmsStatus SMS_STATUS = SmsStatus.PROCESSING;

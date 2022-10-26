@@ -21,15 +21,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @AutoConfigureMockMvc
 class ClientControllerTest extends ControllerTestBase {
 
-    private final static String GET_SMS_MESSAGES_PATH = "/api/v1/client/1/sms?limit=10";
-    protected final static String EXPECTED_RESPONSE_FOR_GET_SMS_MESSAGES = """
+    private static final String GET_SMS_MESSAGES_PATH = "/api/v1/client/1/sms?limit=10";
+    private static final String EXPECTED_RESPONSE_FOR_GET_SMS_MESSAGES = """
             [{"smsId":2,"smsStatus":"SENT","createDateTime":"2000-01-01T01:01:01Z","sendDateTime":"2020-01-01T01:01:01Z"}]""";
-    private final static int LIMIT = 10;
-    private final static Clock clock = Clock.systemUTC();
-    private final static Long CLIENT_ID = 1L;
-    private final static String SMS_TEXT = "sms-text";
-    private final static String RECEIVER_PHONE_NUMBER = "0000000";
-    private final static String IDEMPOTENCY_KEY = "key";
+    private static final int LIMIT = 10;
+    private static final Clock clock = Clock.systemUTC();
+    private static final Long CLIENT_ID = 1L;
+    private static final String SMS_TEXT = "sms-text";
+    private static final String RECEIVER_PHONE_NUMBER = "0000000";
+    private static final String IDEMPOTENCY_KEY = "key";
     private static final Long SMS_ID = 2L;
     private static final String SOURCE_ID = "sourceId";
     private static final ZonedDateTime CREATE_DATE_TIME = ZonedDateTime.of(2000, 01, 01, 01, 01, 01, 00, clock.getZone());

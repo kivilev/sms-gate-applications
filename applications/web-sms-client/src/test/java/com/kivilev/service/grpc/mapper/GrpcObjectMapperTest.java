@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class GrpcObjectMapperTest {
-    private final static Clock clock = Clock.systemUTC();
+    private static final Clock clock = Clock.systemUTC();
     private static final Long CLIENT_ID = 1L;
     private static final Long SMS_ID = 2L;
     private static final String SOURCE_ID = "sourceId";
