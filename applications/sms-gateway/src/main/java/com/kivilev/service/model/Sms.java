@@ -72,26 +72,6 @@ public class Sms implements Persistable<String> {
         return providerExternalId;
     }
 
-    public void setProviderExternalId(String providerExternalId) {
-        this.providerExternalId = providerExternalId;
-    }
-
-    public String getSmsText() {
-        return smsText;
-    }
-
-    public void setSmsText(String smsText) {
-        this.smsText = smsText;
-    }
-
-    public String getReceiverPhoneNumber() {
-        return receiverPhoneNumber;
-    }
-
-    public void setReceiverPhoneNumber(String receiverPhoneNumber) {
-        this.receiverPhoneNumber = receiverPhoneNumber;
-    }
-
     public boolean isSendStatusToQueue() {
         return isSendStatusToQueue;
     }
@@ -116,8 +96,12 @@ public class Sms implements Persistable<String> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Sms sms = (Sms) o;
         return smsId.equals(sms.smsId);
     }

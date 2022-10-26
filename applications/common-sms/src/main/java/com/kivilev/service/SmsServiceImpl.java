@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 
 @Service
 public class SmsServiceImpl implements SmsService {
-    private final static Logger logger = LoggerFactory.getLogger(SmsServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SmsServiceImpl.class);
 
     private final ProducerQueueSmsService producerQueueSmsService;
     private final AtomicInteger id = new AtomicInteger(0);
@@ -55,7 +55,9 @@ public class SmsServiceImpl implements SmsService {
     @Scheduled(initialDelay = MillisConstants.SECOND * 10, fixedRate = MillisConstants.MILLIS * 10)
     public void sendSmsToSmsGateway() {
         var smsListForSending = smsDao.getSmsMessages(SmsState.NEW_SMS, SmsResult.SUCCESSFUL_PROCESSED, package_size);
-        if (smsListForSending.size() == 0) return;
+        if (smsListForSending.size() == 0) {
+            return;
+        }
 
         producerQueueSmsService.sendNewSmsMessages(smsListForSending);
 

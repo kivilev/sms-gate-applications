@@ -36,7 +36,7 @@ class ClientControllerTest extends ControllerTestBase {
     private static final ZonedDateTime UPDATE_DATE_TIME = ZonedDateTime.of(2020, 01, 01, 01, 01, 01, 00, clock.getZone());
 
     @Test
-    void GettingSmsMessagesShouldShouldBeSuccesfull() {
+    void gettingSmsMessagesShouldShouldBeSuccesfull() {
         Sms responseSms = new Sms(SMS_ID, CLIENT_ID, SOURCE_ID, IDEMPOTENCY_KEY, SMS_TEXT, RECEIVER_PHONE_NUMBER, SmsStatus.SENT, CREATE_DATE_TIME, UPDATE_DATE_TIME);
         Mockito.when(smsService.getSmsMessages(CLIENT_ID, LIMIT)).thenReturn(List.of((responseSms)));
 
@@ -46,7 +46,7 @@ class ClientControllerTest extends ControllerTestBase {
     }
 
     @Test
-    void GettingSmsMessagesForNonExistClientShouldGet404Response() {
+    void gettingSmsMessagesForNonExistClientShouldGet404Response() {
         Mockito.when(smsService.getSmsMessages(CLIENT_ID, LIMIT)).thenThrow(new ClientNotFoundException());
 
         var response = ControllerUtils.executeGetRequest(mockMvc, GET_SMS_MESSAGES_PATH, MockMvcResultMatchers.status().is4xxClientError());

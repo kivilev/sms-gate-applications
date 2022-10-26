@@ -37,8 +37,8 @@ public class CommonSmsGrpcServiceImpl implements CommonSmsService {
         return convertIteratorToList(smsStatusResponses, grpcObjectMapper::toSms);
     }
 
-    public static <Response, Entity> List<Entity> convertIteratorToList(Iterator<Response> iterator,
-                                                                        Function<Response, Entity> mapper) {
+    public static <ResponseT, EntityT> List<EntityT> convertIteratorToList(Iterator<ResponseT> iterator,
+                                                                        Function<ResponseT, EntityT> mapper) {
         return Stream.generate(() -> null)
                 .takeWhile(x -> iterator.hasNext())
                 .map(n -> iterator.next())

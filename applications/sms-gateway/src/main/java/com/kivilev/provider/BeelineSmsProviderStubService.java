@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class BeelineSmsProviderStubService implements SmsProviderService {
-    private final static Logger logger = LoggerFactory.getLogger(BeelineSmsProviderStubService.class);
+    private static final Logger logger = LoggerFactory.getLogger(BeelineSmsProviderStubService.class);
 
     @Override
     public SmsStateDetail sendSms(Sms sms) {

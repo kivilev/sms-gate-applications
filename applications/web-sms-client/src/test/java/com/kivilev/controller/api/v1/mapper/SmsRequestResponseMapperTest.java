@@ -29,7 +29,7 @@ class SmsRequestResponseMapperTest {
     private static final ZonedDateTime UPDATE_DATE_TIME = ZonedDateTime.of(2020, 01, 01, 01, 01, 01, 00, clock.getZone());
 
     @Test
-    public void MappingNewSmsRequestDtoToSmsShouldBeSuccesfull() {
+    public void mappingNewSmsRequestDtoToSmsShouldBeSuccesfull() {
         var requestDto = new SendNewSmsRequestDto(CLIENT_ID, SMS_TEXT, RECEIVER_PHONE_NUMBER, IDEMPOTENCY_KEY);
 
         var actualSms = smsRequestResponseMapper.toSms(requestDto);
@@ -46,7 +46,7 @@ class SmsRequestResponseMapperTest {
     }
 
     @Test
-    public void MappingSmsToSendNewSmsResponseDtoBeSuccesfull() {
+    public void mappingSmsToSendNewSmsResponseDtoBeSuccesfull() {
         var sms = new Sms(SMS_ID, CLIENT_ID, SOURCE_ID, IDEMPOTENCY_KEY, SMS_TEXT, RECEIVER_PHONE_NUMBER, SmsStatus.SENT, CREATE_DATE_TIME, UPDATE_DATE_TIME);
 
         var responseDto = smsRequestResponseMapper.toSendNewSmsResponseDto(sms);

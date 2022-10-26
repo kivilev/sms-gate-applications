@@ -3,6 +3,7 @@ plugins {
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id 'org.springframework.boot' version '2.6.6' apply false
     id 'com.google.cloud.tools.jib' version '3.2.1' apply false
+    id 'checkstyle'
 }
 
 
@@ -47,5 +48,13 @@ allprojects {
             dependency("net.devh:grpc-client-spring-boot-starter:${Versions.grpcSpringBoot}")
         }
     }
-}
 
+    apply plugin: 'checkstyle'
+    checkstyle {
+        toolVersion '10.3.4'
+        configFile file("$project.rootDir/checkstyle.xml")
+        ignoreFailures = false
+        maxWarnings = 0
+        maxErrors = 0
+    }
+}

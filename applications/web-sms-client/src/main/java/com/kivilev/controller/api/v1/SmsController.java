@@ -23,7 +23,7 @@ public class SmsController {
 
     private final SmsService smsService;
     private final SmsRequestResponseMapper smsRequestResponseMapper;
-    private final static Logger logger = LoggerFactory.getLogger(ClientController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     public SmsController(SmsService smsService,
                          SmsRequestResponseMapper smsRequestResponseMapper) {

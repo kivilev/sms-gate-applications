@@ -43,7 +43,7 @@ class SmsControllerTest extends ControllerTestBase {
     private static final ZonedDateTime UPDATE_DATE_TIME = ZonedDateTime.of(2020, 01, 01, 01, 01, 01, 00, clock.getZone());
 
     @Test
-    void SendingNewCorrectSmsShouldShouldBeSuccesfull() {
+    void sendingNewCorrectSmsShouldShouldBeSuccesfull() {
         Sms responseSms = new Sms(SMS_ID, CLIENT_ID, SOURCE_ID, IDEMPOTENCY_KEY, SMS_TEXT, RECEIVER_PHONE_NUMBER, SmsStatus.SENT, CREATE_DATE_TIME, UPDATE_DATE_TIME);
         Mockito.when(smsService.sendNewSms(any())).thenReturn(responseSms);
 
@@ -53,7 +53,7 @@ class SmsControllerTest extends ControllerTestBase {
     }
 
     @Test
-    void SendingNewCorrectSmsWithNonExistClientShouldGet404Response() {
+    void sendingNewCorrectSmsWithNonExistClientShouldGet404Response() {
         Mockito.when(smsService.sendNewSms(any())).thenThrow(new ClientNotFoundException());
 
         var response = ControllerUtils.executePostRequest(mockMvc, SEND_NEW_SMS_PATH, SEND_NEW_SMS_JSON, MockMvcResultMatchers.status().is4xxClientError());
