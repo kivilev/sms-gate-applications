@@ -1,3 +1,4 @@
+![](https://github.com/kivilev/sms-gate-applications/workflows/tests/badge.svg)
 # SMS Gate Applications
 ### A several applications for sms-gate
 It's the final project on a course "Java Professional Developer"

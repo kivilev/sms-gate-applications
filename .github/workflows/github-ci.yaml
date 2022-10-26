@@ -1,0 +1,27 @@
+name: CI_push
+on: push
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Setup JDK Liberica v11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'liberica'
+          java-version: '11'
+          cache: 'gradle'
+
+      - name: Run unit-tests
+        run: ./gradlew test
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: all-checks-reports
+          path: |
+            **/build/test-results/*
+            **/build/reports/*
