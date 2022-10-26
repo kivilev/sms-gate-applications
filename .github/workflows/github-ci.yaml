@@ -1,4 +1,4 @@
-name: CI_push
+name: tests
 on: push
 jobs:
   run_checks:
