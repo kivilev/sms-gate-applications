@@ -1,7 +1,6 @@
 package com.kivilev.service;
 
 import com.kivilev.config.SmsStateProcessingConfig;
-import com.kivilev.dao.SmsDao;
 import com.kivilev.service.model.Sms;
 import com.kivilev.service.model.SmsState;
 import com.kivilev.service.processor.InitialSmsStateProcessor;
@@ -18,14 +17,11 @@ import java.util.Map;
 @EnableConfigurationProperties(SmsStateProcessingConfig.class)
 public class SmsServiceImpl implements SmsService {
 
-    private final SmsDao smsDao;
     private final Map<SmsState, SmsStateProcessor> smsStateProcessors;
     private final InitialSmsStateProcessor initialSmsStateProcessor;
 
-    public SmsServiceImpl(SmsDao smsDao,
-                          InitialSmsStateProcessor initialSmsStateProcessor,
+    public SmsServiceImpl(InitialSmsStateProcessor initialSmsStateProcessor,
                           Map<SmsState, SmsStateProcessor> smsStateProcessors) {
-        this.smsDao = smsDao;
         this.smsStateProcessors = smsStateProcessors;
         this.initialSmsStateProcessor = initialSmsStateProcessor;
     }

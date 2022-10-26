@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class GrpcObjectMapperTest {
-    private final static Clock clock = Clock.systemUTC();
+    private static final Clock clock = Clock.systemUTC();
     private static final Long CLIENT_ID = 1L;
     private static final Long SMS_ID = 2L;
     private static final String SOURCE_ID = "sourceId";
@@ -35,7 +35,7 @@ class GrpcObjectMapperTest {
     private final GrpcObjectMapper objectMapper = new GrpcObjectMapper(clock);
 
     @Test
-    void MappingSmsToSendSmsRequestShouldBeSuccesfull() {
+    void mappingSmsToSendSmsRequestShouldBeSuccesfull() {
         Sms sms = new Sms(CLIENT_ID, SOURCE_ID, IDEMPOTENCY_KEY, SMS_TEXT, RECEIVER_PHONE_NUMBER, SMS_STATUS);
         sms.setCreateDateTime(CREATE_DATE_TIME);
 
@@ -51,7 +51,7 @@ class GrpcObjectMapperTest {
     }
 
     @Test
-    void MappingGetSmsStatusMessageResponseToSmsShouldBeSuccesfull() {
+    void mappingGetSmsStatusMessageResponseToSmsShouldBeSuccesfull() {
         var response = SmsMessageResponse.newBuilder()
                 .setSmsId(SMS_ID)
                 .setClientId(CLIENT_ID)

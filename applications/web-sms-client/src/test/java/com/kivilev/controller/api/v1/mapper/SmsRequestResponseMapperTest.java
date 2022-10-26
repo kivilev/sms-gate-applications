@@ -17,11 +17,11 @@ class SmsRequestResponseMapperTest {
 
     private final SmsRequestResponseMapper smsRequestResponseMapper = new SmsRequestResponseMapper();
 
-    private final static Clock clock = Clock.systemUTC();
-    private final static Long CLIENT_ID = 1L;
-    private final static String SMS_TEXT = "sms-text";
-    private final static String RECEIVER_PHONE_NUMBER = "0000000";
-    private final static String IDEMPOTENCY_KEY = "key";
+    private static final Clock clock = Clock.systemUTC();
+    private static final Long CLIENT_ID = 1L;
+    private static final String SMS_TEXT = "sms-text";
+    private static final String RECEIVER_PHONE_NUMBER = "0000000";
+    private static final String IDEMPOTENCY_KEY = "key";
     private static final Long SMS_ID = 2L;
     private static final String SOURCE_ID = "sourceId";
     private static final SmsStatus SMS_STATUS = SmsStatus.PROCESSING;
@@ -29,7 +29,7 @@ class SmsRequestResponseMapperTest {
     private static final ZonedDateTime UPDATE_DATE_TIME = ZonedDateTime.of(2020, 01, 01, 01, 01, 01, 00, clock.getZone());
 
     @Test
-    public void MappingNewSmsRequestDtoToSmsShouldBeSuccesfull() {
+    public void mappingNewSmsRequestDtoToSmsShouldBeSuccesfull() {
         var requestDto = new SendNewSmsRequestDto(CLIENT_ID, SMS_TEXT, RECEIVER_PHONE_NUMBER, IDEMPOTENCY_KEY);
 
         var actualSms = smsRequestResponseMapper.toSms(requestDto);
@@ -46,7 +46,7 @@ class SmsRequestResponseMapperTest {
     }
 
     @Test
-    public void MappingSmsToSendNewSmsResponseDtoBeSuccesfull() {
+    public void mappingSmsToSendNewSmsResponseDtoBeSuccesfull() {
         var sms = new Sms(SMS_ID, CLIENT_ID, SOURCE_ID, IDEMPOTENCY_KEY, SMS_TEXT, RECEIVER_PHONE_NUMBER, SmsStatus.SENT, CREATE_DATE_TIME, UPDATE_DATE_TIME);
 
         var responseDto = smsRequestResponseMapper.toSendNewSmsResponseDto(sms);

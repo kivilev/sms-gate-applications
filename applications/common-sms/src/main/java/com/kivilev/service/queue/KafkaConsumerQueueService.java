@@ -14,14 +14,11 @@ import java.util.List;
 @EnableConfigurationProperties(KafkaConfig.class)
 public class KafkaConsumerQueueService implements ConsumerQueueService {
 
-    private final KafkaConfig kafkaConfig;
     private final SmsServiceImpl smsService;
     private final SmsMessageMapper smsMessageMapper;
 
-    public KafkaConsumerQueueService(KafkaConfig kafkaConfig,
-                                     SmsServiceImpl smsService,
+    public KafkaConsumerQueueService(SmsServiceImpl smsService,
                                      SmsMessageMapper smsMessageMapper) {
-        this.kafkaConfig = kafkaConfig;
         this.smsService = smsService;
         this.smsMessageMapper = smsMessageMapper;
     }

@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class SmsServiceImpl implements SmsService {
 
-    private final static String SOURCE_ID = "web";
+    private static final String SOURCE_ID = "web";
     private final Clock clock;
     private final CommonSmsService commonSmsService;
     private final ClientService clientService;
