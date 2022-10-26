@@ -14,7 +14,7 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Check and analyze code
+      - name: Check style and analyze code
         run: ./gradlew checkstyleMain checkstyleTest
 
       - name: Run unit-tests
