@@ -2,8 +2,8 @@ package com.kivilev.service.processor;
 
 import com.kivilev.config.SmsStateProcessingConfig;
 import com.kivilev.dao.SmsDao;
+import com.kivilev.exception.ProcessingException;
 import com.kivilev.provider.SmsProviderService;
-import com.kivilev.service.model.Sms;
 import com.kivilev.service.model.SmsResult;
 import com.kivilev.service.model.SmsState;
 import org.slf4j.Logger;
@@ -12,19 +12,16 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.function.Predicate;
-
 @Service
 @EnableConfigurationProperties(SmsStateProcessingConfig.class)
 public class GetStatusFromProviderSmsStateProcessor implements SmsStateProcessor {
+
+    private static final Logger logger = LoggerFactory.getLogger(GetStatusFromProviderSmsStateProcessor.class);
 
     private final SmsState processingSmsState = SmsState.SENT_TO_PROVIDER;
     private final SmsDao smsDao;
     private final SmsStateProcessingConfig smsStateProcessingConfig;
     private final SmsProviderService smsProviderService;
-    private final Predicate<Sms> predicate = (Sms sms) -> sms.getSmsStatusDetail().getSmsStatus() == processingSmsState &&
-            sms.getSmsStatusDetail().getSmsResult() == SmsResult.SUCCESSFUL_PROCESSED;
-    private final Logger logger = LoggerFactory.getLogger(GetStatusFromProviderSmsStateProcessor.class);
 
     public GetStatusFromProviderSmsStateProcessor(SmsDao smsDao, SmsStateProcessingConfig smsStateProcessingConfig, SmsProviderService smsProviderService) {
         this.smsDao = smsDao;
@@ -47,6 +44,7 @@ public class GetStatusFromProviderSmsStateProcessor implements SmsStateProcessor
             });
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new ProcessingException(e.getMessage());
         }
     }
 

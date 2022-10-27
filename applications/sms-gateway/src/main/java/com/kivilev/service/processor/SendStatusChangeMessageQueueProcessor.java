@@ -2,6 +2,7 @@ package com.kivilev.service.processor;
 
 import com.kivilev.config.SmsStateProcessingConfig;
 import com.kivilev.dao.SmsDao;
+import com.kivilev.exception.ProcessingException;
 import com.kivilev.service.model.SmsState;
 import com.kivilev.service.queue.ProducerQueueService;
 import org.slf4j.Logger;
@@ -45,6 +46,7 @@ public class SendStatusChangeMessageQueueProcessor implements SmsStateProcessor 
             });
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new ProcessingException(e.getMessage());
         }
     }
 
