@@ -6,7 +6,6 @@ plugins {
     id 'checkstyle'
 }
 
-
 idea {
     project {
         languageLevel = 17
@@ -29,9 +28,9 @@ allprojects {
     dependencyManagement {
         dependencies {
             imports {
-                mavenBom "org.springframework.boot:spring-boot-dependencies:2.7.1"
-                mavenBom "org.testcontainers:testcontainers-bom:1.17.1"
-                mavenBom "com.google.protobuf:protobuf-bom:3.21.1"
+                mavenBom "org.springframework.boot:spring-boot-dependencies:${Versions.springBootDependencies}"//2.7.1
+                mavenBom "org.testcontainers:testcontainers-bom:${Versions.testContainersBom}"//1.17.1
+                mavenBom "com.google.protobuf:protobuf-bom:${Versions.protobufBom}"//3.21.1
             }
 
             dependency("com.fasterxml.jackson.core:jackson-databind:${Versions.jackson}")

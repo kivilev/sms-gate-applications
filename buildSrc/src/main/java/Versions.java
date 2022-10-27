@@ -1,4 +1,8 @@
 public interface Versions {
+    String springBootDependencies = "2.7.1";
+    String testContainersBom = "1.17.1";
+    String protobufBom = "3.21.1";
+
     String guava = "31.0.1-jre";
     String glassfishJson = "2.0.1";
 

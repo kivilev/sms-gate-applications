@@ -1,6 +1,7 @@
 package com.kivilev.service.processor;
 
 import com.kivilev.dao.SmsDao;
+import com.kivilev.exception.ProcessingException;
 import com.kivilev.service.model.Sms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +18,7 @@ public class DequeSmsMessagesSmsStateProcessor implements InitialSmsStateProcess
     private final Logger logger = LoggerFactory.getLogger(SendSmsToProviderSmsStateProcessor.class);
 
 
-    public DequeSmsMessagesSmsStateProcessor(
-            SmsDao smsDao) {
+    public DequeSmsMessagesSmsStateProcessor(SmsDao smsDao) {
         this.smsDao = smsDao;
     }
 
@@ -41,6 +41,7 @@ public class DequeSmsMessagesSmsStateProcessor implements InitialSmsStateProcess
             smsDao.saveSmsMessages(newSmsList);
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new ProcessingException(e.getMessage());
         }
     }
 }
