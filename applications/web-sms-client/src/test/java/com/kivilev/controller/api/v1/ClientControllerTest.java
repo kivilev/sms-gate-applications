@@ -17,7 +17,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-@SpringBootTest(classes = WebSmsClientApplication.class, properties = "logging.level.com.kivilev=DEBUG")
+@SpringBootTest(
+        classes = WebSmsClientApplication.class,
+        properties = "logging.level.com.kivilev=DEBUG",
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+)
 @AutoConfigureMockMvc
 class ClientControllerTest extends ControllerTestBase {
 

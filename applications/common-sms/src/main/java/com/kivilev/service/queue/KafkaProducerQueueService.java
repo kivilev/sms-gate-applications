@@ -35,7 +35,7 @@ public class KafkaProducerQueueService implements ProducerQueueSmsService {
 
         smsSendMessageDtos.forEach(
                 (messageKey, smsStatusChangeMessageDto) ->
-                        kafkaSendSmsTemplate.send(kafkaConfig.getTopicsSmsSendTopicNotificationQueueActualName(), messageKey, smsStatusChangeMessageDto)
+                        kafkaSendSmsTemplate.send(kafkaConfig.getSmsSendTopicName(), messageKey, smsStatusChangeMessageDto)
         );
     }
 

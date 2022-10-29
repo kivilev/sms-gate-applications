@@ -13,9 +13,9 @@ import java.util.stream.Stream;
 
 @Service
 public class CommonSmsGrpcServiceImpl implements CommonSmsService {
+    private static final String GRPC_CLIENT_PARAM_NAME = "common-sms-service";
 
-    //  TODO: вынести в конфиг
-    @GrpcClient("common-sms-service")
+    @GrpcClient(GRPC_CLIENT_PARAM_NAME)
     private SmsSendServiceGrpc.SmsSendServiceBlockingStub smsSendServiceStub;
     private final GrpcObjectMapper grpcObjectMapper;
 
@@ -38,7 +38,7 @@ public class CommonSmsGrpcServiceImpl implements CommonSmsService {
     }
 
     public static <ResponseT, EntityT> List<EntityT> convertIteratorToList(Iterator<ResponseT> iterator,
-                                                                        Function<ResponseT, EntityT> mapper) {
+                                                                           Function<ResponseT, EntityT> mapper) {
         return Stream.generate(() -> null)
                 .takeWhile(x -> iterator.hasNext())
                 .map(n -> iterator.next())

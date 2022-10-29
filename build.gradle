@@ -28,9 +28,9 @@ allprojects {
     dependencyManagement {
         dependencies {
             imports {
-                mavenBom "org.springframework.boot:spring-boot-dependencies:${Versions.springBootDependencies}"//2.7.1
-                mavenBom "org.testcontainers:testcontainers-bom:${Versions.testContainersBom}"//1.17.1
-                mavenBom "com.google.protobuf:protobuf-bom:${Versions.protobufBom}"//3.21.1
+                mavenBom "org.springframework.boot:spring-boot-dependencies:${Versions.springBootDependencies}"
+                mavenBom "org.testcontainers:testcontainers-bom:${Versions.testContainersBom}"
+                mavenBom "com.google.protobuf:protobuf-bom:${Versions.protobufBom}"
             }
 
             dependency("com.fasterxml.jackson.core:jackson-databind:${Versions.jackson}")

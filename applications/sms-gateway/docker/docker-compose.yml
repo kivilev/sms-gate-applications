@@ -7,5 +7,5 @@ services:
       - "5440:5432"
     environment:
       POSTGRES_DB: sms-gateway-db
-      POSTGRES_USER: sms-gateway-user
+      POSTGRES_USER: sms_gateway_user
       POSTGRES_PASSWORD: sms-gateway-user-pwd
