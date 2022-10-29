@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class GrpcObjectMapperTest {
-    private static final Clock clock = Clock.systemUTC();
+    private static final Clock CLOCK = Clock.systemUTC();
     private static final Long CLIENT_ID = 1L;
     private static final Long SMS_ID = 2L;
     private static final String SOURCE_ID = "sourceId";
@@ -21,8 +21,8 @@ class GrpcObjectMapperTest {
     private static final String SMS_TEXT = "sms-text";
     private static final String RECEIVER_PHONE_NUMBER = "000000";
     private static final SmsStatus SMS_STATUS = SmsStatus.PROCESSING;
-    private static final ZonedDateTime CREATE_DATE_TIME = ZonedDateTime.of(2000, 01, 01, 01, 01, 01, 00, clock.getZone());
-    private static final ZonedDateTime UPDATE_DATE_TIME = ZonedDateTime.of(2020, 01, 01, 01, 01, 01, 00, clock.getZone());
+    private static final ZonedDateTime CREATE_DATE_TIME = ZonedDateTime.of(2000, 01, 01, 01, 01, 01, 00, CLOCK.getZone());
+    private static final ZonedDateTime UPDATE_DATE_TIME = ZonedDateTime.of(2020, 01, 01, 01, 01, 01, 00, CLOCK.getZone());
     private static final Timestamp CREATE_TIMESTAMP = Timestamp.newBuilder()
             .setSeconds(CREATE_DATE_TIME.toEpochSecond())
             .setNanos(CREATE_DATE_TIME.getNano())
@@ -32,7 +32,7 @@ class GrpcObjectMapperTest {
             .setNanos(UPDATE_DATE_TIME.getNano())
             .build();
 
-    private final GrpcObjectMapper objectMapper = new GrpcObjectMapper(clock);
+    private final GrpcObjectMapper objectMapper = new GrpcObjectMapper(CLOCK);
 
     @Test
     void mappingSmsToSendSmsRequestShouldBeSuccesfull() {

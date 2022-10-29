@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 @EnableConfigurationProperties(SmsStateProcessingConfig.class)
 public class SmsServiceImpl implements SmsService {
-    private static final Logger logger = LoggerFactory.getLogger(SmsServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SmsServiceImpl.class);
 
     private final ProducerQueueSmsService producerQueueSmsService;
     private final AtomicInteger id = new AtomicInteger(0);
@@ -40,11 +40,11 @@ public class SmsServiceImpl implements SmsService {
     public Sms processIncomingSmsRequest(Sms sms) {
         var smsOptional = smsDao.getSms(sms.getClientId(), sms.getSourceId(), sms.getSourceIdempotencyKey());
         if (smsOptional.isPresent()) {
-            logger.debug(String.format("Processing income sms. Sms already existed. SmsId: %s", smsOptional.get().getSmsId()));
+            LOGGER.debug(String.format("Processing income sms. Sms already existed. SmsId: %s", smsOptional.get().getSmsId()));
             return smsOptional.get();
         }
         smsDao.saveSms(sms);
-        logger.debug(String.format("Processing income sms. New sms. SmsId: %s", sms.getSmsId()));
+        LOGGER.debug(String.format("Processing income sms. New sms. SmsId: %s", sms.getSmsId()));
         return sms;
     }
 
@@ -67,7 +67,7 @@ public class SmsServiceImpl implements SmsService {
         smsListForSending.forEach(sms -> {
             sms.setSmsStatusInfo(new SmsStateDetail(SmsState.SENT_TO_SMS_GATE, SmsResult.SUCCESSFUL_PROCESSED, null, null));
             smsDao.saveSms(sms);
-            logger.debug(String.format("Sending sms to kafka. SmsId: %s", sms.getSmsId()));
+            LOGGER.debug(String.format("Sending sms to kafka. SmsId: %s", sms.getSmsId()));
         });
     }
 
@@ -82,7 +82,7 @@ public class SmsServiceImpl implements SmsService {
                 sms.getSmsStatusInfo().setErrorMessage(message.getErrorMessage());
                 smsDao.saveSms(sms);
             });
-            logger.debug(String.format("Getting sms result change message. SmsId: %s", message.getSmsId()));
+            LOGGER.debug(String.format("Getting sms result change message. SmsId: %s", message.getSmsId()));
         });
     }
 }

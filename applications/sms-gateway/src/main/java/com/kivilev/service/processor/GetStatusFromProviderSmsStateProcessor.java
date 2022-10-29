@@ -16,8 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @EnableConfigurationProperties(SmsStateProcessingConfig.class)
 public class GetStatusFromProviderSmsStateProcessor implements SmsStateProcessor {
 
-    private static final Logger logger = LoggerFactory.getLogger(GetStatusFromProviderSmsStateProcessor.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(GetStatusFromProviderSmsStateProcessor.class);
     private final SmsState processingSmsState = SmsState.SENT_TO_PROVIDER;
     private final SmsDao smsDao;
     private final SmsStateProcessingConfig smsStateProcessingConfig;
@@ -43,7 +42,7 @@ public class GetStatusFromProviderSmsStateProcessor implements SmsStateProcessor
                 smsDao.saveSmsStatusResultInfo(sms.getSmsId(), smsStatusInfo);
             });
         } catch (Exception e) {
-            logger.error(e.toString());
+            LOGGER.error(e.toString());
             throw new ProcessingException(e.getMessage());
         }
     }

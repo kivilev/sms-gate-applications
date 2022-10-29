@@ -21,8 +21,8 @@ abstract class ControllerTestBase {
     @MockBean
     CommonSmsService commonSmsService;
 
+    // TODO: Сделать нормальное мокирование grpc - либо отключение полностью
     /*
-    TODO: Сделать нормальное мокирование grpc - либо отключение полностью
     @GrpcClient("common-sms-service")
     @MockBean
     private SmsSendServiceGrpc.SmsSendServiceBlockingStub smsSendServiceStub;

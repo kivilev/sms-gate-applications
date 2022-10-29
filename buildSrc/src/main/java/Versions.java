@@ -9,4 +9,5 @@ public interface Versions {
     String springKafka = "2.9.1";
     String grpcSpringBoot = "2.13.1.RELEASE";
     String jackson = "2.13.4.2";
+    String spotbugsAnnotation = "4.7.3";
 }

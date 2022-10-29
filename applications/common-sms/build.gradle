@@ -21,6 +21,7 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation("org.springframework.kafka:spring-kafka-test")
+    testImplementation("com.github.spotbugs:spotbugs-annotations")
 
     implementation project(':proto-models')
 }

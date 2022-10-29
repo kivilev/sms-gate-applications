@@ -11,6 +11,9 @@ import java.nio.charset.StandardCharsets;
 
 class ControllerUtils {
 
+    private ControllerUtils() {
+    }
+
     public static String executePutRequest(
             MockMvc mockMvc,
             String path,

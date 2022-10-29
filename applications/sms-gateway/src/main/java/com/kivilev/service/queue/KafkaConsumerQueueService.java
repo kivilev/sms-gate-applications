@@ -14,19 +14,16 @@ import java.util.List;
 @EnableConfigurationProperties(KafkaConfig.class)
 public class KafkaConsumerQueueService implements ConsumerQueueService {
 
-    private final KafkaConfig kafkaConfig;
     private final SmsService smsService;
     private final SmsMessageMapper smsMessageMapper;
 
-    public KafkaConsumerQueueService(KafkaConfig kafkaConfig,
-                                     SmsService smsService,
+    public KafkaConsumerQueueService(SmsService smsService,
                                      SmsMessageMapper smsMessageMapper) {
-        this.kafkaConfig = kafkaConfig;
         this.smsService = smsService;
         this.smsMessageMapper = smsMessageMapper;
     }
 
-    @KafkaListener(id = "sms-send", topics = {"${kafka.topics.sms-send-topic-name}"}, containerFactory = "batchFactory")
+    @KafkaListener(id = "sms-send", topics = "${kafka.topics.sms-send-topic-name}", containerFactory = "batchFactory")
     @Override
     public void readSmsSendMessages(List<SmsSendMessageDto> smsSendMessageDtos) {
         var smsList = smsSendMessageDtos.stream().map(smsMessageMapper::toSms).toList();

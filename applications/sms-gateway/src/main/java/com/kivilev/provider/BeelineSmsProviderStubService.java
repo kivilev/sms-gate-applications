@@ -12,15 +12,15 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class BeelineSmsProviderStubService implements SmsProviderService {
-    private static final Logger logger = LoggerFactory.getLogger(BeelineSmsProviderStubService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BeelineSmsProviderStubService.class);
 
     @Override
     public SmsStateDetail sendSms(Sms sms) {
         if (getRandomInt(0, 4) == 0) {
-            logger.debug(String.format("sending sms to provider was failed. smsId=%s", sms.getSmsId()));
+            LOGGER.debug(String.format("sending sms to provider was failed. smsId=%s", sms.getSmsId()));
             return new SmsStateDetail(SmsState.SENT_TO_PROVIDER, SmsResult.ERROR, "110", "Some error occurred");
         } else {
-            logger.debug(String.format("sms was successful sent to provider. smsId=%s", sms.getSmsId()));
+            LOGGER.debug(String.format("sms was successful sent to provider. smsId=%s", sms.getSmsId()));
 
             return new SmsStateDetail(SmsState.SENT_TO_PROVIDER, SmsResult.SUCCESSFUL_PROCESSED, null, null);
         }
@@ -29,11 +29,11 @@ public class BeelineSmsProviderStubService implements SmsProviderService {
     @Override
     public SmsStateDetail getSmsStatus(Sms sms) {
         if (getRandomInt(0, 4) == 0) {
-            logger.debug(String.format("sending sms to client was failed. externalId=%s", sms.getSmsId()));
+            LOGGER.debug(String.format("sending sms to client was failed. externalId=%s", sms.getSmsId()));
 
             return new SmsStateDetail(SmsState.SENT_TO_CLIENT, SmsResult.ERROR, "100", "Beeline sms gateway internal error");
         } else {
-            logger.debug(String.format("sms was successful sent to client. externalId=%s", sms.getProviderExternalId()));
+            LOGGER.debug(String.format("sms was successful sent to client. externalId=%s", sms.getProviderExternalId()));
 
             return new SmsStateDetail(SmsState.SENT_TO_CLIENT, SmsResult.SUCCESSFUL_PROCESSED, null, null);
         }

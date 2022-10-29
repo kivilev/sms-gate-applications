@@ -19,7 +19,8 @@ public interface SmsRepository extends CrudRepository<Sms, String> {
 
     Optional<Sms> findByClientIdAndSourceIdAndSourceIdempotencyKey(Long clientId, String sourceId, String sourceIdempotencyKey);
 
-    List<Sms> findByClientId(Long clientId);//, int limit);// TODO: сделать limit
+    //, int limit);// TODO: сделать limit
+    List<Sms> findByClientId(Long clientId);
 
     @Transactional(timeout = 10)
     @Query("""

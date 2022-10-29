@@ -15,12 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @EnableConfigurationProperties(SmsStateProcessingConfig.class)
 public class SendSmsToProviderSmsStateProcessor implements SmsStateProcessor {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(SendSmsToProviderSmsStateProcessor.class);
     private final SmsState processingSmsState = SmsState.NEW_FROM_QUEUE;
     private final SmsDao smsDao;
     private final SmsStateProcessingConfig smsStateProcessingConfig;
     private final SmsProviderService smsProviderService;
-    private final Logger logger = LoggerFactory.getLogger(SendSmsToProviderSmsStateProcessor.class);
 
     public SendSmsToProviderSmsStateProcessor(SmsDao smsDao, SmsStateProcessingConfig smsStateProcessingConfig, SmsProviderService smsProviderService) {
         this.smsDao = smsDao;
@@ -39,7 +38,7 @@ public class SendSmsToProviderSmsStateProcessor implements SmsStateProcessor {
                 smsDao.saveSmsStatusResultInfo(sms.getSmsId(), smsStatusInfo);
             });
         } catch (Exception e) {
-            logger.error(e.toString());
+            LOGGER.error(e.toString());
             throw new ProcessingException(e.getMessage());
         }
     }

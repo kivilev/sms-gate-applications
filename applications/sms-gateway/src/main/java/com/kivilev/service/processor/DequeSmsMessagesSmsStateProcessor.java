@@ -14,9 +14,8 @@ import java.util.stream.Collectors;
 @Service
 public class DequeSmsMessagesSmsStateProcessor implements InitialSmsStateProcessor {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DequeSmsMessagesSmsStateProcessor.class);
     private final SmsDao smsDao;
-    private final Logger logger = LoggerFactory.getLogger(SendSmsToProviderSmsStateProcessor.class);
-
 
     public DequeSmsMessagesSmsStateProcessor(SmsDao smsDao) {
         this.smsDao = smsDao;
@@ -35,12 +34,12 @@ public class DequeSmsMessagesSmsStateProcessor implements InitialSmsStateProcess
                     .collect(Collectors.toList());
 
             newSmsList.forEach(sms -> {
-                logger.debug(String.format("got new message. smdId: %s", sms.getSmsId()));
+                LOGGER.debug(String.format("got new message. smdId: %s", sms.getSmsId()));
             });
 
             smsDao.saveSmsMessages(newSmsList);
         } catch (Exception e) {
-            logger.error(e.toString());
+            LOGGER.error(e.toString());
             throw new ProcessingException(e.getMessage());
         }
     }

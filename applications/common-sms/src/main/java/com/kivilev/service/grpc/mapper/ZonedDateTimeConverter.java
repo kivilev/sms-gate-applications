@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 //@Converter
-public class ZonedDateTimeConverter {//implements AttributeConverter<ZonedDateTime, Timestamp> {
-
+public class ZonedDateTimeConverter {
+    //implements AttributeConverter<ZonedDateTime, Timestamp> {
    /* private final Clock clock;
 
     public ZonedDateTimeConverter(Clock clock) {

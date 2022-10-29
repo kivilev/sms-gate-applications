@@ -16,7 +16,6 @@ import java.time.ZonedDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
-
 @SpringBootTest(
         classes = WebSmsClientApplication.class,
         properties = "logging.level.com.kivilev=DEBUG",
@@ -36,15 +35,15 @@ class SmsControllerTest extends ControllerTestBase {
             """;
     private static final String EXPECTED_RESPONSE_FOR_SEND_NEW_SMS = """
             {"smsId":2,"smsStatus":"SENT","createDateTime":"2000-01-01T01:01:01Z","sendDateTime":"2020-01-01T01:01:01Z"}""";
-    private static final Clock clock = Clock.systemUTC();
+    private static final Clock CLOCK = Clock.systemUTC();
     private static final Long CLIENT_ID = 1L;
     private static final String SMS_TEXT = "sms-text";
     private static final String RECEIVER_PHONE_NUMBER = "0000000";
     private static final String IDEMPOTENCY_KEY = "key";
     private static final Long SMS_ID = 2L;
     private static final String SOURCE_ID = "sourceId";
-    private static final ZonedDateTime CREATE_DATE_TIME = ZonedDateTime.of(2000, 01, 01, 01, 01, 01, 00, clock.getZone());
-    private static final ZonedDateTime UPDATE_DATE_TIME = ZonedDateTime.of(2020, 01, 01, 01, 01, 01, 00, clock.getZone());
+    private static final ZonedDateTime CREATE_DATE_TIME = ZonedDateTime.of(2000, 01, 01, 01, 01, 01, 00, CLOCK.getZone());
+    private static final ZonedDateTime UPDATE_DATE_TIME = ZonedDateTime.of(2020, 01, 01, 01, 01, 01, 00, CLOCK.getZone());
 
     @Test
     void sendingNewCorrectSmsShouldShouldBeSuccesfull() {

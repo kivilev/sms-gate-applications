@@ -7,6 +7,7 @@ import com.kivilev.model.SmsState;
 import com.kivilev.model.SmsStateDetail;
 import com.kivilev.protobuf.generated.SendSmsRequest;
 import com.kivilev.protobuf.generated.SmsStatus;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -25,16 +26,16 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class GrpcObjectMapperTest {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_ZONED_DATE_TIME;
-    private static final Clock clock = Clock.fixed(Instant.parse("2022-01-01T01:00:00Z"), ZoneOffset.UTC);
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_ZONED_DATE_TIME;
+    private static final Clock CLOCK = Clock.fixed(Instant.parse("2022-01-01T01:00:00Z"), ZoneOffset.UTC);
     private static final Long CLIENT_ID = 1L;
     private static final Long SMS_ID = 2L;
     private static final String SOURCE_ID = "sourceId";
     private static final String IDEMPOTENCY_KEY = "idempotency-key";
     private static final String SMS_TEXT = "sms-text";
     private static final String RECEIVER_PHONE_NUMBER = "000000";
-    private static final ZonedDateTime CREATE_DATE_TIME = ZonedDateTime.now(clock).minusMinutes(1);
-    private static final ZonedDateTime UPDATE_DATE_TIME = ZonedDateTime.now(clock);
+    private static final ZonedDateTime CREATE_DATE_TIME = ZonedDateTime.now(CLOCK).minusMinutes(1);
+    private static final ZonedDateTime UPDATE_DATE_TIME = ZonedDateTime.now(CLOCK);
     private static final Timestamp CREATE_TIMESTAMP = Timestamp.newBuilder()
             .setSeconds(CREATE_DATE_TIME.toEpochSecond())
             .setNanos(CREATE_DATE_TIME.getNano())
@@ -44,11 +45,10 @@ class GrpcObjectMapperTest {
             .setNanos(UPDATE_DATE_TIME.getNano())
             .build();
 
-
-    private final GrpcObjectMapper mapper = new GrpcObjectMapper(clock);
+    private final GrpcObjectMapper mapper = new GrpcObjectMapper(CLOCK);
 
     @Test
-    public void MappingSendSmsRequestToSmsShouldBeSuccessful() {
+    public void mappingSendSmsRequestToSmsShouldBeSuccessful() {
         SendSmsRequest sendSmsRequest = SendSmsRequest.newBuilder()
                 .setClientId(CLIENT_ID)
                 .setSource(SOURCE_ID)
@@ -76,7 +76,7 @@ class GrpcObjectMapperTest {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("smsToSmsMessageResponseTestCases")
-    public void MappingSmsToSmsMessageResponseShouldBeSuccessful(String testCaseName, Sms sms, SmsStatus expectedSmsStatus) {
+    public void mappingSmsToSmsMessageResponseShouldBeSuccessful(String testCaseName, Sms sms, SmsStatus expectedSmsStatus) {
         var actualResponse = mapper.toSmsMessageResponse(sms);
 
         assertNotNull(actualResponse);
@@ -90,6 +90,7 @@ class GrpcObjectMapperTest {
         assertEquals(expectedSmsStatus, actualResponse.getStatus());
     }
 
+    @SuppressFBWarnings("UPM")
     private static Stream<Arguments> smsToSmsMessageResponseTestCases() {
         return Stream.of(
                 Arguments.of("sms in new sms state", buildSms(SmsState.NEW_SMS, SmsResult.SUCCESSFUL_PROCESSED), SmsStatus.PROCESSING),
@@ -109,6 +110,6 @@ class GrpcObjectMapperTest {
     }
 
     private static String toString(ZonedDateTime zonedDateTime) {
-        return zonedDateTime.format(formatter);
+        return zonedDateTime.format(DATE_TIME_FORMATTER);
     }
 }
