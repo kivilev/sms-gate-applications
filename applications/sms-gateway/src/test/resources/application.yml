@@ -1,13 +1,10 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5440/sms-gateway-db
+    url: jdbc:tc:postgresql:14:///sms-gateway-db?TC_INITSCRIPT=db/init.sql&currentSchema=public
     username: sms_gateway_user
     password: sms-gateway-user-pwd
   flyway:
     enabled: true
-
-server:
-  port: 0
 
 kafka:
   bootstrap-servers: localhost:9092
@@ -19,10 +16,13 @@ kafka:
     sms-send-topic-name: sms-send-topic
     sms-send-result-topic-name: sms-result-topic
 
+server:
+  port: 0
+
 logging:
   level:
-    org.springframework.jdbc.core.JdbcTemplate: INFO
-    com.kivilev: INFO
+    org.springframework.jdbc.core.JdbcTemplate: TRACE
+    com.kivilev: DEBUG
 
 state-processor:
   package-size: 100

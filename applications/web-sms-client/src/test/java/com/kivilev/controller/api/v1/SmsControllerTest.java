@@ -17,7 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 
-@SpringBootTest(classes = WebSmsClientApplication.class, properties = "logging.level.com.kivilev=DEBUG")
+@SpringBootTest(
+        classes = WebSmsClientApplication.class,
+        properties = "logging.level.com.kivilev=DEBUG",
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+)
 @AutoConfigureMockMvc
 class SmsControllerTest extends ControllerTestBase {
 

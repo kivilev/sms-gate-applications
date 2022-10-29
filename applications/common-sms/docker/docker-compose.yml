@@ -7,5 +7,5 @@ services:
       - "5441:5432"
     environment:
       POSTGRES_DB: common-sms-db
-      POSTGRES_USER: common-sms-user
+      POSTGRES_USER: common_sms_user
       POSTGRES_PASSWORD: common-sms-user-pwd

@@ -1,5 +1,6 @@
 package com.kivilev.service;
 
+import com.kivilev.config.SmsStateProcessingConfig;
 import com.kivilev.dao.SmsDao;
 import com.kivilev.model.Sms;
 import com.kivilev.model.SmsResult;
@@ -10,27 +11,28 @@ import com.kivilev.service.queue.ProducerQueueSmsService;
 import com.kivilev.utils.MillisConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Predicate;
 
 @Service
+@EnableConfigurationProperties(SmsStateProcessingConfig.class)
 public class SmsServiceImpl implements SmsService {
     private static final Logger logger = LoggerFactory.getLogger(SmsServiceImpl.class);
 
     private final ProducerQueueSmsService producerQueueSmsService;
     private final AtomicInteger id = new AtomicInteger(0);
     private final SmsDao smsDao;
-    private static final Predicate<Sms> filterForNewSms = sms -> sms.getSmsStatusInfo().getSmsStatus() == SmsState.NEW_SMS;
-    private final int package_size = 10; // TODO : перейти на конфигурацию
+    private final SmsStateProcessingConfig smsStateProcessingConfig;
 
-    public SmsServiceImpl(ProducerQueueSmsService producerQueueSmsService, SmsDao smsDao) {
+    public SmsServiceImpl(ProducerQueueSmsService producerQueueSmsService, SmsDao smsDao, SmsStateProcessingConfig smsStateProcessingConfig) {
         this.producerQueueSmsService = producerQueueSmsService;
         this.smsDao = smsDao;
+        this.smsStateProcessingConfig = smsStateProcessingConfig;
     }
 
     @Override
@@ -54,7 +56,7 @@ public class SmsServiceImpl implements SmsService {
     @Override
     @Scheduled(initialDelay = MillisConstants.SECOND * 10, fixedRate = MillisConstants.MILLIS * 10)
     public void sendSmsToSmsGateway() {
-        var smsListForSending = smsDao.getSmsMessages(SmsState.NEW_SMS, SmsResult.SUCCESSFUL_PROCESSED, package_size);
+        var smsListForSending = smsDao.getSmsMessages(SmsState.NEW_SMS, SmsResult.SUCCESSFUL_PROCESSED, smsStateProcessingConfig.getPackageSize());
         if (smsListForSending.size() == 0) {
             return;
         }

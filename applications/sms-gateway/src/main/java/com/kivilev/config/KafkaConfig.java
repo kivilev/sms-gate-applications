@@ -1,60 +1,45 @@
 package com.kivilev.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConstructorBinding;
+
+import java.util.Map;
 
 @ConfigurationProperties(prefix = "kafka")
+@ConstructorBinding
 public class KafkaConfig {
-    private String bootstrapServers;
-    private String producerId;
-    private String consumerGroupId;
-    private String topicsSmsSendTopicNotificationQueueActualName;
-    private String topicsSmsStatusTopicNotificationQueueActualName;
+    private static final String smsSendTopicParameterName = "sms-send-topic-name";
+    private static final String smsStatusNotificationTopicParameterName = "sms-send-result-topic-name";
 
-    public KafkaConfig() {
-        // TODO: переделать на нормальное считывание из конфига
-        producerId = "sms-status-producer";
-        consumerGroupId = "sms-gateway-sms-send-consumer-group";
-        topicsSmsSendTopicNotificationQueueActualName = "sms-send-topic";
-        topicsSmsStatusTopicNotificationQueueActualName = "sms-result-topic";
+    private final String bootstrapServers;
+    private final Map<String, String> producer;
+    private final Map<String, String> consumer;
+    private final Map<String, String> topics;
+
+    public KafkaConfig(String bootstrapServers, Map<String, String> producer, Map<String, String> consumer, Map<String, String> topics) {
+        this.bootstrapServers = bootstrapServers;
+        this.producer = producer;
+        this.consumer = consumer;
+        this.topics = topics;
     }
 
     public String getBootstrapServers() {
         return bootstrapServers;
     }
 
-    public void setBootstrapServers(String bootstrapServers) {
-        this.bootstrapServers = bootstrapServers;
-    }
-
     public String getProducerId() {
-        return producerId;
+        return producer.get("id");
     }
 
-    public void setProducerId(String producerId) {
-        this.producerId = producerId;
+    public String getSmsSendTopicName() {
+        return topics.get(smsSendTopicParameterName);
     }
 
-    public String getTopicsSmsSendTopicNotificationQueueActualName() {
-        return topicsSmsSendTopicNotificationQueueActualName;
-    }
-
-    public void setTopicsSmsSendTopicNotificationQueueActualName(String topicsSmsSendTopicNotificationQueueActualName) {
-        this.topicsSmsSendTopicNotificationQueueActualName = topicsSmsSendTopicNotificationQueueActualName;
-    }
-
-    public String getTopicsSmsStatusTopicNotificationQueueActualName() {
-        return topicsSmsStatusTopicNotificationQueueActualName;
-    }
-
-    public void setTopicsSmsStatusTopicNotificationQueueActualName(String topicsSmsStatusTopicNotificationQueueActualName) {
-        this.topicsSmsStatusTopicNotificationQueueActualName = topicsSmsStatusTopicNotificationQueueActualName;
+    public String getSmsSendResultTopicName() {
+        return topics.get(smsStatusNotificationTopicParameterName);
     }
 
     public String getConsumerGroupId() {
-        return consumerGroupId;
-    }
-
-    public void setConsumerGroupId(String consumerGroupId) {
-        this.consumerGroupId = consumerGroupId;
+        return consumer.get("group-id");
     }
 }

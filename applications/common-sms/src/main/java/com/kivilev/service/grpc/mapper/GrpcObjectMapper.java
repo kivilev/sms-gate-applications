@@ -35,7 +35,7 @@ public class GrpcObjectMapper {
                 sendSmsRequest.getSmsText(),
                 sendSmsRequest.getReceiverPhoneNumber(),
                 new SmsStateDetail(SmsState.NEW_SMS, SmsResult.SUCCESSFUL_PROCESSED, null, null),
-                map(sendSmsRequest.getCreateDateTime()), //mapZonedDateTime(sendSmsRequest.getCreateDateTime()),
+                map(sendSmsRequest.getCreateDateTime()),
                 map(ZonedDateTime.now(clock)),
                 true
         );
