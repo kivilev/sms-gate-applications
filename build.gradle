@@ -4,6 +4,7 @@ plugins {
     id 'org.springframework.boot' version '2.6.6' apply false
     id 'com.google.cloud.tools.jib' version '3.2.1' apply false
     id 'checkstyle'
+    id 'com.github.spotbugs' version '5.0.9'
 }
 
 idea {
@@ -37,8 +38,9 @@ allprojects {
 
             dependency("org.webjars:bootstrap:${Versions.bootstrap}")
 
-            dependency("org.springdoc:springdoc-openapi-ui:${Versions.springDocOpenapiUi}")
             dependency("com.google.code.findbugs:jsr305:${Versions.jsr305}")
+            dependency("com.github.spotbugs:spotbugs-annotations:${Versions.spotbugsAnnotation}")
+
             dependency("org.springframework.kafka:spring-kafka:${Versions.springKafka}")
 
             dependency("ch.qos.logback:logback-classic:${Versions.logBackClassic}")
@@ -55,5 +57,14 @@ allprojects {
         ignoreFailures = false
         maxWarnings = 0
         maxErrors = 0
+    }
+
+
+    apply plugin: 'com.github.spotbugs'
+    spotbugs {
+        showProgress = true
+        effort = 'max'
+        reportLevel = 'low'
+        excludeFilter = file("$project.rootDir/spotbugs-exclude.xml")
     }
 }

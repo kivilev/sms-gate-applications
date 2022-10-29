@@ -20,10 +20,9 @@ import static com.kivilev.controller.api.v1.RestError.ERROR_MESSAGE_CLIENT_NOT_F
 @RestController
 @RequestMapping("/api/v1/sms")
 public class SmsController {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(SmsController.class);
     private final SmsService smsService;
     private final SmsRequestResponseMapper smsRequestResponseMapper;
-    private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     public SmsController(SmsService smsService,
                          SmsRequestResponseMapper smsRequestResponseMapper) {
@@ -34,7 +33,7 @@ public class SmsController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
     public SendNewSmsResponseDto sendNewSms(@RequestBody SendNewSmsRequestDto sendNewSmsRequestDto) {
-        logger.debug(String.format("got request. %s", sendNewSmsRequestDto.toString()));
+        LOGGER.debug(String.format("got request. %s", sendNewSmsRequestDto.toString()));
 
         try {
             var newSms = smsService.sendNewSms(smsRequestResponseMapper.toSms(sendNewSmsRequestDto));

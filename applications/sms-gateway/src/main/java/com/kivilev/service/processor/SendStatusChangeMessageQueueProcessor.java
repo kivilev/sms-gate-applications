@@ -14,12 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @EnableConfigurationProperties(SmsStateProcessingConfig.class)
 public class SendStatusChangeMessageQueueProcessor implements SmsStateProcessor {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(SendStatusChangeMessageQueueProcessor.class);
     private final SmsState processingSmsState = SmsState.SENT_TO_CLIENT;
     private final SmsDao smsDao;
     private final SmsStateProcessingConfig smsStateProcessingConfig;
     private final ProducerQueueService producerQueueService;
-    private final Logger logger = LoggerFactory.getLogger(SendStatusChangeMessageQueueProcessor.class);
 
     public SendStatusChangeMessageQueueProcessor(SmsDao smsDao, SmsStateProcessingConfig smsStateProcessingConfig, ProducerQueueService producerQueueService) {
         this.smsDao = smsDao;
@@ -37,7 +36,7 @@ public class SendStatusChangeMessageQueueProcessor implements SmsStateProcessor 
                 sms.setSendStatusToQueue(true);
                 smsDao.saveSms(sms);
 
-                logger.debug(String.format("sending sms status to queue. smsId: %s, status: %s, result: %s, error_code: %s, error_msg: %s",
+                LOGGER.debug(String.format("sending sms status to queue. smsId: %s, status: %s, result: %s, error_code: %s, error_msg: %s",
                         sms.getSmsId(),
                         sms.getSmsStatusDetail().getSmsStatus(),
                         sms.getSmsStatusDetail().getSmsResult(),
@@ -45,7 +44,7 @@ public class SendStatusChangeMessageQueueProcessor implements SmsStateProcessor 
                         sms.getSmsStatusDetail().getErrorMessage()));
             });
         } catch (Exception e) {
-            logger.error(e.toString());
+            LOGGER.error(e.toString());
             throw new ProcessingException(e.getMessage());
         }
     }

@@ -8,8 +8,8 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "kafka")
 @ConstructorBinding
 public class KafkaConfig {
-    private static final String smsSendTopicParameterName = "sms-send-topic-name";
-    private static final String smsStatusNotificationTopicParameterName = "sms-send-result-topic-name";
+    private static final String SMS_SEND_TOPIC_PARAMETER_NAME = "sms-send-topic-name";
+    private static final String SMS_STATUS_NOTIFICATION_TOPIC_PARAMETER_NAME = "sms-send-result-topic-name";
 
     private final String bootstrapServers;
     private final Map<String, String> producer;
@@ -32,11 +32,11 @@ public class KafkaConfig {
     }
 
     public String getSmsSendTopicName() {
-        return topics.get(smsSendTopicParameterName);
+        return topics.get(SMS_SEND_TOPIC_PARAMETER_NAME);
     }
 
     public String getSmsSendResultTopicName() {
-        return topics.get(smsStatusNotificationTopicParameterName);
+        return topics.get(SMS_STATUS_NOTIFICATION_TOPIC_PARAMETER_NAME);
     }
 
     public String getConsumerGroupId() {

@@ -20,8 +20,8 @@ import static com.kivilev.protobuf.generated.SmsStatus.FAILED;
 @Component
 public class GrpcObjectMapper {
 
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_ZONED_DATE_TIME;
     private final Clock clock;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_ZONED_DATE_TIME;
 
     public GrpcObjectMapper(Clock clock) {
         this.clock = clock;
@@ -68,7 +68,7 @@ public class GrpcObjectMapper {
     }
 
     private Timestamp map(String dtime) {
-        var zonedDateTime = ZonedDateTime.parse(dtime, formatter);
+        var zonedDateTime = ZonedDateTime.parse(dtime, DATE_TIME_FORMATTER);
         return Timestamp.newBuilder()
                 .setSeconds(zonedDateTime.toEpochSecond())
                 .setNanos(zonedDateTime.getNano())
@@ -80,21 +80,8 @@ public class GrpcObjectMapper {
         return map(dtime);
     }
 
-
     private String map(ZonedDateTime zonedDateTime) {
-        return zonedDateTime.format(formatter);
+        return zonedDateTime.format(DATE_TIME_FORMATTER);
     }
-
-
-/*    private Timestamp map(Instant zonedDateTime) {
-        return Timestamp.newBuilder()
-                .setSeconds(zonedDateTime.toEpochSecond())
-                .setNanos(zonedDateTime.getNano())
-                .build();
-    }
-
-    private Instant map(Timestamp timestamp) {
-        return ZonedDateTime.ofInstant(Instant.ofEpochSecond(timestamp.getSeconds(), timestamp.getNanos()), clock.getZone());
-    }*/
 
 }

@@ -17,7 +17,8 @@ public class Sms {
         this(null, clientId, sourceId, idempotencyKey, smsText, receiverPhoneNumber, smsStatus, null, null);
     }
 
-    public Sms(Long smsId, Long clientId, String sourceId, String idempotencyKey, String smsText, String receiverPhoneNumber, SmsStatus smsStatus, ZonedDateTime createDateTime, ZonedDateTime sendReceiverDateTime) {
+    public Sms(Long smsId, Long clientId, String sourceId, String idempotencyKey, String smsText, String receiverPhoneNumber,
+               SmsStatus smsStatus, ZonedDateTime createDateTime, ZonedDateTime sendReceiverDateTime) {
         this.smsId = smsId;
         this.clientId = clientId;
         this.sourceId = sourceId;

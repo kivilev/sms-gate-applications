@@ -49,7 +49,6 @@ class SendStatusChangeMessageQueueProcessorTest {
     public void processSmsMessagesShouldBeSuccesfull() {
         var sms = buildSms();
         var smsMessages = List.of(sms);
-        var smsStateFromProvider = new SmsStateDetail(SmsState.SENT_TO_PROVIDER, SmsResult.SUCCESSFUL_PROCESSED, null, null);
         when(smsDao.getSmsMessagesReadyForSendingQueue(eq(PACKAGE_SIZE))).thenReturn(smsMessages);
 
         processor.process();

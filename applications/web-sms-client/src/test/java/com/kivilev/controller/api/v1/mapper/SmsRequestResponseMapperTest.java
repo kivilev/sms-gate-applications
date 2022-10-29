@@ -15,18 +15,17 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class SmsRequestResponseMapperTest {
 
-    private final SmsRequestResponseMapper smsRequestResponseMapper = new SmsRequestResponseMapper();
-
-    private static final Clock clock = Clock.systemUTC();
+    private static final Clock CLOCK = Clock.systemUTC();
     private static final Long CLIENT_ID = 1L;
     private static final String SMS_TEXT = "sms-text";
     private static final String RECEIVER_PHONE_NUMBER = "0000000";
     private static final String IDEMPOTENCY_KEY = "key";
     private static final Long SMS_ID = 2L;
     private static final String SOURCE_ID = "sourceId";
-    private static final SmsStatus SMS_STATUS = SmsStatus.PROCESSING;
-    private static final ZonedDateTime CREATE_DATE_TIME = ZonedDateTime.of(2000, 01, 01, 01, 01, 01, 00, clock.getZone());
-    private static final ZonedDateTime UPDATE_DATE_TIME = ZonedDateTime.of(2020, 01, 01, 01, 01, 01, 00, clock.getZone());
+    private static final ZonedDateTime CREATE_DATE_TIME = ZonedDateTime.of(2000, 01, 01, 01, 01, 01, 00, CLOCK.getZone());
+    private static final ZonedDateTime UPDATE_DATE_TIME = ZonedDateTime.of(2020, 01, 01, 01, 01, 01, 00, CLOCK.getZone());
+
+    private final SmsRequestResponseMapper smsRequestResponseMapper = new SmsRequestResponseMapper();
 
     @Test
     public void mappingNewSmsRequestDtoToSmsShouldBeSuccesfull() {

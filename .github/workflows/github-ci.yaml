@@ -15,9 +15,9 @@ jobs:
           cache: 'gradle'
 
       - name: Check style and analyze code
-        run: ./gradlew checkstyleMain checkstyleTest
+        run: ./gradlew check -x test
 
-      - name: Run unit-tests
+      - name: Run tests
         run: ./gradlew test
 
       - name: Upload test results

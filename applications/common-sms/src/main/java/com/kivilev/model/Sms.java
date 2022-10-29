@@ -12,20 +12,12 @@ import java.util.Objects;
 @Table("sms")
 public class Sms implements Persistable<Long> {
     @Id
-    @Nonnull
     private Long smsId;
-    @Nonnull
     private final Long clientId;
-    @Nonnull
     private final String sourceId;
-    @Nonnull
     private final String sourceIdempotencyKey;
-    @Nonnull
     private final String smsText;
-    @Nonnull
     private final String receiverPhoneNumber;
-
-    @Nonnull
     private final String createDateTime;
     private final String changeStatusDateTime;
 
@@ -39,9 +31,12 @@ public class Sms implements Persistable<Long> {
     private SmsStateDetail smsStateDetail;
 
     @Transient
-    private boolean isNew = true;// TODO: скорее всего не нужно
+    private boolean isNew = true;
+    // TODO: скорее всего не нужно
 
-    public Sms(Long smsId, String sourceId, Long clientId, String sourceIdempotencyKey, String smsText, String receiverPhoneNumber, SmsStateDetail smsStateDetail, String createDateTime, String changeStatusDateTime, boolean isNew) {
+    public Sms(Long smsId, String sourceId, Long clientId, String sourceIdempotencyKey, String smsText,
+               String receiverPhoneNumber, SmsStateDetail smsStateDetail, String createDateTime,
+               String changeStatusDateTime, boolean isNew) {
         this.smsId = smsId;
         this.clientId = clientId;
         this.sourceId = sourceId;
@@ -55,7 +50,8 @@ public class Sms implements Persistable<Long> {
     }
 
     @PersistenceCreator
-    public Sms(Long smsId, String sourceId, Long clientId, String sourceIdempotencyKey, String smsText, String receiverPhoneNumber, SmsStateDetail smsStateDetail, String createDateTime, String changeStatusDateTime) {
+    public Sms(Long smsId, String sourceId, Long clientId, String sourceIdempotencyKey, String smsText,
+               String receiverPhoneNumber, SmsStateDetail smsStateDetail, String createDateTime, String changeStatusDateTime) {
         this(smsId, sourceId, clientId, sourceIdempotencyKey, smsText, receiverPhoneNumber, smsStateDetail, createDateTime, changeStatusDateTime, false);
     }
 

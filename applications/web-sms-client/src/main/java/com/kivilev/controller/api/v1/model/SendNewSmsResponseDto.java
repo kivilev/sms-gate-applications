@@ -1,6 +1,5 @@
 package com.kivilev.controller.api.v1.model;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 public record SendNewSmsResponseDto(
