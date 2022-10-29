@@ -59,10 +59,9 @@ allprojects {
         maxErrors = 0
     }
 
-
     apply plugin: 'com.github.spotbugs'
     spotbugs {
-        showProgress = true
+        showProgress = false
         effort = 'max'
         reportLevel = 'low'
         excludeFilter = file("$project.rootDir/spotbugs-exclude.xml")

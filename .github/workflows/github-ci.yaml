@@ -14,6 +14,9 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
+      - name: Assemble applications
+        run: ./gradlew assemble
+
       - name: Check style and analyze code
         run: ./gradlew check -x test
 
