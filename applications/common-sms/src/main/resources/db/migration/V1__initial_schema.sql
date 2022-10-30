@@ -6,8 +6,8 @@ create table sms
     source_idempotency_key  varchar(100) not null,
     sms_text                text         not null,
     receiver_phone_number   varchar(20)  not null,
-    create_date_time        varchar(30) not null, --timestamptz  not null,
-    change_status_date_time varchar(30) --timestamptz
+    create_date_time        varchar(30)  not null, --timestamptz  not null,
+    change_status_date_time varchar(30)            --timestamptz
     /*
     cost                  numeric(5, 2)*/
 );
@@ -26,6 +26,7 @@ create table sms_state_detail
     error_message varchar(1000)
 );
 
+commit;
 
 /*
 create table sms_cost
