@@ -10,7 +10,6 @@ import java.util.List;
 
 @Service
 public class SmsServiceImpl implements SmsService {
-
     private static final String SOURCE_ID = "web";
     private final Clock clock;
     private final CommonSmsService commonSmsService;
@@ -29,7 +28,6 @@ public class SmsServiceImpl implements SmsService {
         }
         sms.setCreateDateTime(ZonedDateTime.now(clock));
         sms.setSourceId(SOURCE_ID);
-
         return commonSmsService.sendSms(sms);
     }
 

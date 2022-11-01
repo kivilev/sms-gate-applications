@@ -52,7 +52,7 @@ public class GrpcObjectMapper {
                 .setReceiverPhoneNumber(sms.getReceiverPhoneNumber())
                 .setCreateDateTime(map(sms.getCreateDateTime()))
                 .setSendReceiverDateTime(map(sms.getChangeStatusDateTime()))
-                .setStatus(mapStatus(sms.getSmsStatusInfo().getSmsStatus(), sms.getSmsStatusInfo().getSmsResult()))
+                .setStatus(mapStatus(sms.getSmsStateDetail().getSmsStatus(), sms.getSmsStateDetail().getSmsResult()))
                 .build();
     }
 

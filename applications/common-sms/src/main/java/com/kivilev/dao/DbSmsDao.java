@@ -36,8 +36,8 @@ public class DbSmsDao implements SmsDao {
     }
 
     @Override
-    public Optional<Sms> getSms(String smsId) {
-        return smsRepository.findById(smsId);
+    public Optional<Sms> getSms(Long smsId) {
+        return smsRepository.findBySmsId(smsId);
     }
 
     @Override

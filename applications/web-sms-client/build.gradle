@@ -8,11 +8,11 @@ dependencies {
     implementation('ch.qos.logback:logback-classic')
 
     implementation('net.devh:grpc-client-spring-boot-starter')
-
     implementation('org.springframework.boot:spring-boot-starter-web')
-    implementation('org.springframework.boot:spring-boot-starter-test')
 
-    implementation('com.google.code.findbugs:jsr305')
+    compileOnly('com.google.code.findbugs:jsr305')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 
     implementation project(':proto-models')
 }

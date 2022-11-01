@@ -4,6 +4,8 @@ import com.kivilev.protobuf.generated.SmsSendServiceGrpc;
 import com.kivilev.service.grpc.mapper.GrpcObjectMapper;
 import com.kivilev.service.model.Sms;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -13,6 +15,7 @@ import java.util.stream.Stream;
 
 @Service
 public class CommonSmsGrpcServiceImpl implements CommonSmsService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommonSmsGrpcServiceImpl.class);
     private static final String GRPC_CLIENT_PARAM_NAME = "common-sms-service";
 
     @GrpcClient(GRPC_CLIENT_PARAM_NAME)
@@ -27,7 +30,11 @@ public class CommonSmsGrpcServiceImpl implements CommonSmsService {
     public Sms sendSms(Sms sms) {
         var request = grpcObjectMapper.toSendSmsRequest(sms);
         var smsStatusResponse = smsSendServiceStub.sendSms(request);
-        return grpcObjectMapper.toSms(smsStatusResponse);
+        var responseSms = grpcObjectMapper.toSms(smsStatusResponse);
+
+        LOGGER.debug(String.format("Sms gRPC response. sms: %s", responseSms.toString()));
+
+        return responseSms;
     }
 
     @Override

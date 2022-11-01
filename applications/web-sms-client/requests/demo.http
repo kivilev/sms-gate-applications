@@ -6,12 +6,12 @@ Content-Type: application/json
   "clientId": 1,
   "smsText": "Привет! это тестовая SMS",
   "receiverPhoneNumber": "+7-999-999-00-00",
-  "idempotencyKey": "key-9"
+  "idempotencyKey": "key-921"
 }
 
 
 ### получение списка sms по клиенту
-GET http://localhost:8084/api/v1/client/1/sms?limit=10
+GET http://localhost:8084/api/v1/client/2/sms?limit=10
 Accept: application/json
 
 

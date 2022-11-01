@@ -14,7 +14,7 @@ public interface SmsDao {
 
     void saveSms(Sms sms);
 
-    Optional<Sms> getSms(String smsId);
+    Optional<Sms> getSms(Long smsId);
 
     List<Sms> getSmsMessages(Long clientId, int limit);
 }
