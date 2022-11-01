@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @EnableConfigurationProperties(SmsStateProcessingConfig.class)
@@ -25,7 +24,6 @@ public class SmsServiceImpl implements SmsService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SmsServiceImpl.class);
 
     private final ProducerQueueSmsService producerQueueSmsService;
-    private final AtomicInteger id = new AtomicInteger(0);
     private final SmsDao smsDao;
     private final SmsStateProcessingConfig smsStateProcessingConfig;
 
@@ -57,15 +55,17 @@ public class SmsServiceImpl implements SmsService {
     @Scheduled(initialDelay = MillisConstants.SECOND * 10, fixedRate = MillisConstants.MILLIS * 10)
     public void sendSmsToSmsGateway() {
         var smsListForSending = smsDao.getSmsMessages(SmsState.NEW_SMS, SmsResult.SUCCESSFUL_PROCESSED, smsStateProcessingConfig.getPackageSize());
-        if (smsListForSending.size() == 0) {
+        if (smsListForSending.isEmpty()) {
             return;
         }
+
+        LOGGER.debug(String.format("Sending sms messages to kafka. Count: %s", smsListForSending.size()));
 
         producerQueueSmsService.sendNewSmsMessages(smsListForSending);
 
         // TODO: переписать на обработку ошибок по отдельной смс (сейчас отваливается сразу пачка)
         smsListForSending.forEach(sms -> {
-            sms.setSmsStatusInfo(new SmsStateDetail(SmsState.SENT_TO_SMS_GATE, SmsResult.SUCCESSFUL_PROCESSED, null, null));
+            sms.setSmsStateDetail(new SmsStateDetail(SmsState.SENT_TO_SMS_GATE, SmsResult.SUCCESSFUL_PROCESSED, null, null));
             smsDao.saveSms(sms);
             LOGGER.debug(String.format("Sending sms to kafka. SmsId: %s", sms.getSmsId()));
         });
@@ -74,12 +74,12 @@ public class SmsServiceImpl implements SmsService {
     @Override
     public void processSmsStatusMessages(List<SmsResultChangeMessage> smsResultChangeMessages) {
         smsResultChangeMessages.forEach(message -> {
-            var smsOptional = smsDao.getSms(message.getSmsId());
+            var smsOptional = smsDao.getSms(Long.valueOf(message.getSmsId()));
             smsOptional.ifPresent(sms -> {
-                sms.getSmsStatusInfo().setSmsStatus(SmsState.SENT_TO_CLIENT);
-                sms.getSmsStatusInfo().setSmsResult(message.getSmsResult());
-                sms.getSmsStatusInfo().setErrorCode(message.getErrorCode());
-                sms.getSmsStatusInfo().setErrorMessage(message.getErrorMessage());
+                sms.getSmsStateDetail().setSmsStatus(SmsState.SENT_TO_CLIENT);
+                sms.getSmsStateDetail().setSmsResult(message.getSmsResult());
+                sms.getSmsStateDetail().setErrorCode(message.getErrorCode());
+                sms.getSmsStateDetail().setErrorMessage(message.getErrorMessage());
                 smsDao.saveSms(sms);
             });
             LOGGER.debug(String.format("Getting sms result change message. SmsId: %s", message.getSmsId()));

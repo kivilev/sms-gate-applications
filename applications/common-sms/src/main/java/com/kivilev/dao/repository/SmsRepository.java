@@ -12,24 +12,25 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 
-public interface SmsRepository extends CrudRepository<Sms, String> {
+public interface SmsRepository extends CrudRepository<Sms, Long> {
 
     @Transactional(timeout = 10)
-    Optional<Sms> findBySmsId(@Nonnull String smsId);
+    Optional<Sms> findBySmsId(@Nonnull Long smsId);
 
     Optional<Sms> findByClientIdAndSourceIdAndSourceIdempotencyKey(Long clientId, String sourceId, String sourceIdempotencyKey);
 
-    //, int limit);// TODO: сделать limit
+    // TODO: сделать limit, можно через прямой запрос, но не хочется
+    //, int limit);
     List<Sms> findByClientId(Long clientId);
 
     @Transactional(timeout = 10)
     @Query("""
             select s.*,
-                   sr.sms                      AS "smsstatusresultinfo_sms",
-                   sr."sms_state"              AS "smsstatusresultinfo_sms_state",
-                   sr."error_code"             AS "smsstatusresultinfo_error_code",
-                   sr."sms_result"             AS "smsstatusresultinfo_sms_result",
-                   sr."error_message"          AS "smsstatusresultinfo_error_message"
+                   sr.sms                      AS "smsstatedetail_sms",
+                   sr."sms_state"              AS "smsstatedetail_sms_state",
+                   sr."error_code"             AS "smsstatedetail_error_code",
+                   sr."sms_result"             AS "smsstatedetail_sms_result",
+                   sr."error_message"          AS "smsstatedetail_error_message"
              from sms s
              left join sms_state_detail sr ON sr.sms = s."sms_id"
             where sr.sms_state = :p_state

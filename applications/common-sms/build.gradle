@@ -14,7 +14,7 @@ dependencies {
     implementation('org.flywaydb:flyway-core')
     runtimeOnly('org.postgresql:postgresql')
 
-    implementation('com.google.code.findbugs:jsr305')
+    compileOnly('com.google.code.findbugs:jsr305')
 
     testImplementation('org.testcontainers:postgresql')
     testImplementation("org.testcontainers:kafka")

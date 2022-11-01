@@ -12,7 +12,7 @@ public class SmsStateProcessingConfig {
         this.packageSize = packageSize;
     }
 
-    public Integer getPackageSize() {
+    public int getPackageSize() {
         return packageSize;
     }
 }

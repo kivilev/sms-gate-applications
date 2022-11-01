@@ -85,4 +85,19 @@ public class Sms {
     public void setSourceId(String sourceId) {
         this.sourceId = sourceId;
     }
+
+    @Override
+    public String toString() {
+        return "Sms{" +
+                "smsId=" + smsId +
+                ", clientId=" + clientId +
+                ", sourceId='" + sourceId + '\'' +
+                ", idempotencyKey='" + idempotencyKey + '\'' +
+                ", smsText='" + smsText + '\'' +
+                ", smsStatus=" + smsStatus +
+                ", receiverPhoneNumber='" + receiverPhoneNumber + '\'' +
+                ", createDateTime=" + createDateTime +
+                ", sendReceiverDateTime=" + sendReceiverDateTime +
+                '}';
+    }
 }

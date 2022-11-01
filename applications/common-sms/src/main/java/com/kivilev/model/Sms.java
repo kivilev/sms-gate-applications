@@ -6,7 +6,6 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Table;
 
-import javax.annotation.Nonnull;
 import java.util.Objects;
 
 @Table("sms")
@@ -75,11 +74,11 @@ public class Sms implements Persistable<Long> {
         return receiverPhoneNumber;
     }
 
-    public SmsStateDetail getSmsStatusInfo() {
+    public SmsStateDetail getSmsStateDetail() {
         return smsStateDetail;
     }
 
-    public void setSmsStatusInfo(SmsStateDetail smsStateDetail) {
+    public void setSmsStateDetail(SmsStateDetail smsStateDetail) {
         this.smsStateDetail = smsStateDetail;
     }
 
@@ -87,7 +86,6 @@ public class Sms implements Persistable<Long> {
         return sourceIdempotencyKey;
     }
 
-    @Nonnull
     public Long getClientId() {
         return clientId;
     }

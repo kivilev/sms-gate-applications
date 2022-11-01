@@ -68,10 +68,10 @@ class GrpcObjectMapperTest {
         assertEquals(SMS_TEXT, actualSms.getSmsText());
         assertEquals(toString(CREATE_DATE_TIME), actualSms.getCreateDateTime());
         assertEquals(toString(UPDATE_DATE_TIME), actualSms.getChangeStatusDateTime());
-        assertEquals(SmsState.NEW_SMS, actualSms.getSmsStatusInfo().getSmsState());
-        assertEquals(SmsResult.SUCCESSFUL_PROCESSED, actualSms.getSmsStatusInfo().getSmsResult());
-        assertNull(actualSms.getSmsStatusInfo().getErrorCode());
-        assertNull(actualSms.getSmsStatusInfo().getErrorMessage());
+        assertEquals(SmsState.NEW_SMS, actualSms.getSmsStateDetail().getSmsState());
+        assertEquals(SmsResult.SUCCESSFUL_PROCESSED, actualSms.getSmsStateDetail().getSmsResult());
+        assertNull(actualSms.getSmsStateDetail().getErrorCode());
+        assertNull(actualSms.getSmsStateDetail().getErrorMessage());
     }
 
     @ParameterizedTest(name = "{0}")
