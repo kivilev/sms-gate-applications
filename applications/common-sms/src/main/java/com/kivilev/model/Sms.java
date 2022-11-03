@@ -17,6 +17,9 @@ public class Sms implements Persistable<Long> {
     private final String sourceIdempotencyKey;
     private final String smsText;
     private final String receiverPhoneNumber;
+    // Вопрос. Сделал даты как строки в модели и в таблице в БД. Естественно это не айс.
+    // никак не решил проблему, как можно в моделе сделать ZonedDateTime, и в таблице timestamptz. Как это конвертировать меж собой
+    // в JPA можно юзать кастомные конвертеры (@Converter), но в JDBC это не работает.
     private final String createDateTime;
     private final String changeStatusDateTime;
 

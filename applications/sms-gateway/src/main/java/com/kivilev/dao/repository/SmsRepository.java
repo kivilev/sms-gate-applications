@@ -14,9 +14,12 @@ import java.util.Optional;
 
 public interface SmsRepository extends CrudRepository<Sms, String> {
 
+    // Вопрос: я так понял, что @Transactional при чтении эквивалентно select * from ... for update wait N; ? или я не прав?
+    // Если эквивалентен, то как например указать, чтобы пропускал заблокированные? аля skip locked?
     @Transactional(timeout = 10)
     Optional<Sms> findBySmsId(@Nonnull String smsId);
 
+    // Вопрос: как можно написать запрос не используя текст? У меня никак не получалось написать текстом в названии метода
     @Transactional(timeout = 10)
     @Query("""
             select s.*,
@@ -33,6 +36,7 @@ public interface SmsRepository extends CrudRepository<Sms, String> {
             """)
     List<Sms> findAllBySmsStateAndResult(@Param("p_state") SmsState smsState, @Param("p_result") SmsResult smsResult, @Param("p_limit") int rowsNumber);
 
+    // Вопрос: как можно написать запрос не используя текст? У меня никак не получалось написать текстом в названии метода
     @Transactional(timeout = 10)
     @Query("""
             select s.*,

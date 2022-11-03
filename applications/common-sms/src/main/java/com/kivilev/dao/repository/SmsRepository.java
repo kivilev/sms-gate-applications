@@ -19,10 +19,12 @@ public interface SmsRepository extends CrudRepository<Sms, Long> {
 
     Optional<Sms> findByClientIdAndSourceIdAndSourceIdempotencyKey(Long clientId, String sourceId, String sourceIdempotencyKey);
 
-    // TODO: сделать limit, можно через прямой запрос, но не хочется
+    // Вопрос. Как можно сделать limit? можно через прямой запрос, но не хочется
     //, int limit);
     List<Sms> findByClientId(Long clientId);
 
+    // Вопрос. Пытался написать через именование метода, но получилось только через прямой запрос
+    // что явно не по феншую и не по концепции. Не могли бы подсказать как правильно на этот случай написать?
     @Transactional(timeout = 10)
     @Query("""
             select s.*,

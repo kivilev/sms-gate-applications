@@ -4,6 +4,8 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Table("sms_state_detail")
 public class SmsStateDetail {
+    // Вопрос. Как задавать нормальный ID в таблице? Сейчас задается как sms по имени объекта-родителя.
+    // Если тут создавать прям поле sms_id, то его нужно обрабатывать в конструтор пихать и т.п. это не удобно.
     private SmsState smsState;
     private SmsResult smsResult;
     private String errorCode;
