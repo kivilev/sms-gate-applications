@@ -34,7 +34,7 @@ public class ClientController {
     @GetMapping("/{clientId}/sms")
     @ResponseStatus(HttpStatus.OK)
     public List<SendNewSmsResponseDto> getSmsMessages(@PathVariable("clientId") Long clientId, Integer limit) {
-        LOGGER.debug(String.format("got request. clientId: %s, limit: %s", clientId, limit));
+        LOGGER.debug("got request. clientId: {}, limit: {}", clientId, limit);
 
         try {
             return smsService.getSmsMessages(clientId, limit)
