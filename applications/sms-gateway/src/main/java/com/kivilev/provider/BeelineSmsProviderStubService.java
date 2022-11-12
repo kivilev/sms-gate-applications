@@ -17,10 +17,10 @@ public class BeelineSmsProviderStubService implements SmsProviderService {
     @Override
     public SmsStateDetail sendSms(Sms sms) {
         if (getRandomInt(0, 4) == 0) {
-            LOGGER.debug(String.format("sending sms to provider was failed. smsId=%s", sms.getSmsId()));
+            LOGGER.debug("sending sms to provider was failed. smsId={}", sms.getSmsId());
             return new SmsStateDetail(SmsState.SENT_TO_PROVIDER, SmsResult.ERROR, "110", "Some error occurred");
         } else {
-            LOGGER.debug(String.format("sms was successful sent to provider. smsId=%s", sms.getSmsId()));
+            LOGGER.debug("sms was successful sent to provider. smsId={}", sms.getSmsId());
 
             return new SmsStateDetail(SmsState.SENT_TO_PROVIDER, SmsResult.SUCCESSFUL_PROCESSED, null, null);
         }
@@ -29,11 +29,11 @@ public class BeelineSmsProviderStubService implements SmsProviderService {
     @Override
     public SmsStateDetail getSmsStatus(Sms sms) {
         if (getRandomInt(0, 4) == 0) {
-            LOGGER.debug(String.format("sending sms to client was failed. externalId=%s", sms.getSmsId()));
+            LOGGER.debug("sending sms to client was failed. externalId={}", sms.getSmsId());
 
             return new SmsStateDetail(SmsState.SENT_TO_CLIENT, SmsResult.ERROR, "100", "Beeline sms gateway internal error");
         } else {
-            LOGGER.debug(String.format("sms was successful sent to client. externalId=%s", sms.getProviderExternalId()));
+            LOGGER.debug("sms was successful sent to client. externalId={}", sms.getProviderExternalId());
 
             return new SmsStateDetail(SmsState.SENT_TO_CLIENT, SmsResult.SUCCESSFUL_PROCESSED, null, null);
         }

@@ -38,11 +38,11 @@ public class SmsServiceImpl implements SmsService {
     public Sms processIncomingSmsRequest(Sms sms) {
         var smsOptional = smsDao.getSms(sms.getClientId(), sms.getSourceId(), sms.getSourceIdempotencyKey());
         if (smsOptional.isPresent()) {
-            LOGGER.debug(String.format("Processing income sms. Sms already existed. SmsId: %s", smsOptional.get().getSmsId()));
+            LOGGER.debug("Processing income sms. Sms already existed. SmsId: {}", smsOptional.get().getSmsId());
             return smsOptional.get();
         }
         smsDao.saveSms(sms);
-        LOGGER.debug(String.format("Processing income sms. New sms. SmsId: %s", sms.getSmsId()));
+        LOGGER.debug("Processing income sms. New sms. SmsId: {}", sms.getSmsId());
         return sms;
     }
 
@@ -59,7 +59,7 @@ public class SmsServiceImpl implements SmsService {
             return;
         }
 
-        LOGGER.debug(String.format("Sending sms messages to kafka. Count: %s", smsListForSending.size()));
+        LOGGER.debug("Sending sms messages to kafka. Count: {}", smsListForSending.size());
 
         producerQueueSmsService.sendNewSmsMessages(smsListForSending);
 
@@ -67,7 +67,7 @@ public class SmsServiceImpl implements SmsService {
         smsListForSending.forEach(sms -> {
             sms.setSmsStateDetail(new SmsStateDetail(SmsState.SENT_TO_SMS_GATE, SmsResult.SUCCESSFUL_PROCESSED, null, null));
             smsDao.saveSms(sms);
-            LOGGER.debug(String.format("Sending sms to kafka. SmsId: %s", sms.getSmsId()));
+            LOGGER.debug("Sending sms to kafka. SmsId: {}", sms.getSmsId());
         });
     }
 
@@ -82,7 +82,7 @@ public class SmsServiceImpl implements SmsService {
                 sms.getSmsStateDetail().setErrorMessage(message.getErrorMessage());
                 smsDao.saveSms(sms);
             });
-            LOGGER.debug(String.format("Getting sms result change message. SmsId: %s", message.getSmsId()));
+            LOGGER.debug("Getting sms result change message. SmsId: {}", message.getSmsId());
         });
     }
 }

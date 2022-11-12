@@ -33,7 +33,7 @@ public class SmsController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
     public SendNewSmsResponseDto sendNewSms(@RequestBody SendNewSmsRequestDto sendNewSmsRequestDto) {
-        LOGGER.debug(String.format("got request. %s", sendNewSmsRequestDto.toString()));
+        LOGGER.debug("got request. {}", sendNewSmsRequestDto.toString());
 
         try {
             var newSms = smsService.sendNewSms(smsRequestResponseMapper.toSms(sendNewSmsRequestDto));

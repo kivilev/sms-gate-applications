@@ -34,7 +34,7 @@ public class DequeSmsMessagesSmsStateProcessor implements InitialSmsStateProcess
                     .collect(Collectors.toList());
 
             newSmsList.forEach(sms -> {
-                LOGGER.debug(String.format("got new message. smdId: %s", sms.getSmsId()));
+                LOGGER.debug("got new message. smdId: {}", sms.getSmsId());
             });
 
             smsDao.saveSmsMessages(newSmsList);

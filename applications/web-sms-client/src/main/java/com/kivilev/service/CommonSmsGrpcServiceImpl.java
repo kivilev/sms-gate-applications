@@ -32,7 +32,7 @@ public class CommonSmsGrpcServiceImpl implements CommonSmsService {
         var smsStatusResponse = smsSendServiceStub.sendSms(request);
         var responseSms = grpcObjectMapper.toSms(smsStatusResponse);
 
-        LOGGER.debug(String.format("Sms gRPC response. sms: %s", responseSms.toString()));
+        LOGGER.debug("Sms gRPC response. sms: {}", responseSms.toString());
 
         return responseSms;
     }

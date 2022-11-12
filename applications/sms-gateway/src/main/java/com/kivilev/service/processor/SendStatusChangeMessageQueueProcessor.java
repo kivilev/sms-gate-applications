@@ -36,12 +36,12 @@ public class SendStatusChangeMessageQueueProcessor implements SmsStateProcessor 
                 sms.setSendStatusToQueue(true);
                 smsDao.saveSms(sms);
 
-                LOGGER.debug(String.format("sending sms status to queue. smsId: %s, status: %s, result: %s, error_code: %s, error_msg: %s",
+                LOGGER.debug("sending sms status to queue. smsId: {}, status: {}, result: {}, error_code: {}, error_msg: {}",
                         sms.getSmsId(),
                         sms.getSmsStatusDetail().getSmsStatus(),
                         sms.getSmsStatusDetail().getSmsResult(),
                         sms.getSmsStatusDetail().getErrorCode(),
-                        sms.getSmsStatusDetail().getErrorMessage()));
+                        sms.getSmsStatusDetail().getErrorMessage());
             });
         } catch (Exception e) {
             LOGGER.error(e.toString());
